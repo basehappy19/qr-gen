@@ -1,393 +1,238 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QR Gen Studio</title>
-  <meta name="description" content="สร้าง QR Code จากลิงก์ได้หลายอัน ปรับแต่งสี ขนาด และดาวน์โหลดได้ง่าย" />
+  <meta name="description" content="สร้าง QR Code จากลิงก์ได้ง่าย ปรับสีและใส่โลโก้ได้" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0a0a12;
-      --surface: rgba(255,255,255,0.05);
-      --surface-hover: rgba(255,255,255,0.09);
-      --border: rgba(255,255,255,0.10);
-      --border-focus: rgba(139,92,246,0.7);
-      --accent: #8b5cf6;
-      --accent2: #06b6d4;
-      --accent-grad: linear-gradient(135deg, #8b5cf6, #06b6d4);
-      --text: #f1f5f9;
-      --muted: #94a3b8;
-      --danger: #ef4444;
-      --success: #10b981;
-      --card-radius: 20px;
-      --trans: 0.2s ease;
+      --bg: #f5f5f5;
+      --surface: #ffffff;
+      --border: #e4e4e4;
+      --border-focus: #999;
+      --text: #1a1a1a;
+      --muted: #777;
+      --danger: #d32f2f;
+      --radius: 12px;
+      --trans: 0.15s ease;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      overflow-x: hidden;
+      font-size: 15px;
+      line-height: 1.5;
     }
-
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 20% 10%, rgba(139,92,246,0.15) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(6,182,212,0.12) 0%, transparent 70%);
-      pointer-events: none;
+    .page { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+    header { padding: 40px 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-icon { width: 36px; height: 36px; background: var(--text); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .brand-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-sub { font-size: 12px; color: var(--muted); }
+    .count-pill { font-size: 13px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; }
+    .count-pill strong { color: var(--text); }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
+    .panel-title { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px; }
+    .field { margin-bottom: 14px; }
+    label { display: block; font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 5px; }
+    input[type="text"], input[type="url"], select {
+      width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 14px; color: var(--text); font-family: inherit; font-size: 14px;
+      outline: none; transition: border-color var(--trans), background var(--trans);
+      -webkit-appearance: none; appearance: none;
     }
-
-    .page { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 20px 80px; }
-
-    header { text-align: center; padding: 60px 0 40px; }
-    .logo-badge {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 6px 18px;
-      font-size: 13px; color: var(--muted);
-      margin-bottom: 24px;
-    }
-    header h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 800;
-      background: var(--accent-grad);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    header p { color: var(--muted); font-size: 1rem; }
-
-    .add-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--card-radius);
-      padding: 28px 28px 24px;
-      margin-bottom: 40px;
-      backdrop-filter: blur(20px);
-    }
-    .section-label {
-      font-size: .75rem; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 18px;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 200px auto;
-      gap: 12px;
-      align-items: end;
-      margin-bottom: 18px;
-    }
-    @media(max-width: 680px) { .field-row { grid-template-columns: 1fr; } }
-
-    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
-
-    input[type="text"],
-    input[type="url"],
-    input[type="color"],
+    input[type="text"]:focus, input[type="url"]:focus, select:focus { border-color: var(--border-focus); background: #fff; }
+    input::placeholder { color: #bbb; }
     select {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color var(--trans), box-shadow var(--trans);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; cursor: pointer;
     }
-    input:focus, select:focus {
-      border-color: var(--border-focus);
-      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
-    }
-    input::placeholder { color: var(--muted); }
-    select option { background: #1e1b4b; }
-
-    .customize-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .color-field { display: flex; align-items: center; gap: 8px; }
-    input[type="color"] { width: 42px; height: 42px; padding: 2px; cursor: pointer; border-radius: 8px; flex-shrink: 0; }
+    select option { background: #fff; color: #1a1a1a; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 640px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 400px) { .grid-4 { grid-template-columns: 1fr; } }
+    .color-row { display: flex; align-items: center; gap: 7px; }
+    input[type="color"] { width: 38px; height: 38px; padding: 2px; border: 1px solid var(--border); border-radius: 8px; background: none; cursor: pointer; flex-shrink: 0; outline: none; }
     .color-hex { flex: 1; }
-
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 12px 24px;
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px; font-weight: 600;
-      border: none; cursor: pointer;
-      transition: all var(--trans);
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: var(--accent-grad);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(139,92,246,0.35);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.5); }
-    .btn-primary:active { transform: translateY(0); }
-    .btn-ghost { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
-    .btn-ghost:hover { background: var(--surface-hover); border-color: var(--border-focus); }
-    .btn-danger { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: var(--danger); }
-    .btn-danger:hover { background: rgba(239,68,68,0.25); }
-    .btn-download { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: var(--success); padding: 8px 16px; font-size: 13px; border-radius: 10px; }
-    .btn-download:hover { background: rgba(16,185,129,0.25); }
-    .btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 10px; }
-
-    .toolbar {
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-      margin-bottom: 24px;
-    }
-    .count-badge {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      padding: 6px 16px;
-      font-size: 13px; color: var(--muted);
-    }
-    .count-badge strong { color: var(--text); }
-    .toolbar-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-
-    #cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .qr-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--card-radius);
-      overflow: hidden;
-      backdrop-filter: blur(16px);
-      transition: transform var(--trans), border-color var(--trans), box-shadow var(--trans);
-      animation: cardIn .35s ease both;
-    }
-    .qr-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(139,92,246,0.4);
-      box-shadow: 0 12px 40px rgba(139,92,246,0.15);
-    }
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(20px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px 10px;
-      border-bottom: 1px solid var(--border);
-      gap: 8px;
-    }
-    .card-num { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; }
-    .card-title { font-size: 13px; font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-    .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
-
-    .qr-wrapper {
-      display: flex; align-items: center; justify-content: center;
-      padding: 24px;
-      background: rgba(255,255,255,0.02);
-    }
-    .qr-wrapper canvas, .qr-wrapper img { border-radius: 8px; display: block; }
-
-    .card-meta {
-      padding: 10px 16px 14px;
-    }
-    .card-url {
-      font-size: 12px; color: var(--muted);
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      margin-bottom: 4px;
-    }
-    .card-url a { color: var(--accent2); text-decoration: none; }
-    .card-url a:hover { text-decoration: underline; }
-    .card-opts { font-size: 11px; color: rgba(148,163,184,0.6); display: flex; gap: 10px; flex-wrap: wrap; }
-    .card-opts span { display: flex; align-items: center; gap: 3px; }
-    .color-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,0.15); }
-
-    #empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 80px 20px;
-      display: none;
-    }
-    #empty-state.visible { display: block; }
-    .empty-icon { font-size: 64px; margin-bottom: 16px; opacity: .4; }
-    #empty-state p { color: var(--muted); font-size: .95rem; }
-
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 999;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(6px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity .25s;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: #111827;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 32px;
-      width: min(500px, 95vw);
-      transform: scale(0.95) translateY(20px);
-      transition: transform .25s;
-    }
-    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
-    .modal h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
-    .modal p { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
-    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-
-    #toast {
-      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
-      background: #1e1b4b;
-      border: 1px solid var(--border-focus);
-      border-radius: 14px;
-      padding: 12px 20px;
-      font-size: 14px;
-      display: flex; align-items: center; gap: 10px;
-      transform: translateY(80px); opacity: 0;
-      transition: all .3s ease;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-    }
-    #toast.show { transform: translateY(0); opacity: 1; }
-
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 18px; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 500; border: 1px solid transparent; cursor: pointer; transition: all var(--trans); white-space: nowrap; }
+    .btn-primary { background: var(--text); color: #fff; border-color: var(--text); }
+    .btn-primary:hover { background: #333; border-color: #333; }
+    .btn-ghost { background: var(--bg); color: var(--text); border-color: var(--border); }
+    .btn-ghost:hover { border-color: var(--border-focus); background: #fff; }
+    .btn-danger { background: transparent; color: var(--danger); border-color: #f5c6c6; }
+    .btn-danger:hover { background: #fff0f0; }
+    .btn-sm { padding: 7px 13px; font-size: 13px; }
+    .btn-icon { padding: 7px; width: 34px; height: 34px; border-radius: 8px; }
+    .add-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: flex-end; }
+    @media (max-width: 480px) { .add-row { grid-template-columns: 1fr; } }
+    .logo-upload { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .logo-file-btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 500; background: var(--bg); color: var(--text); border: 1px solid var(--border); cursor: pointer; transition: all var(--trans); }
+    .logo-file-btn:hover { border-color: var(--border-focus); background: #fff; }
+    .logo-file-btn input { display: none; }
+    #logo-preview { width: 34px; height: 34px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border); display: none; }
     .divider { height: 1px; background: var(--border); margin: 20px 0; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+    .toolbar-left { font-size: 14px; color: var(--muted); }
+    .toolbar-left strong { color: var(--text); }
+    .toolbar-right { display: flex; gap: 8px; flex-wrap: wrap; }
+    #cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .qr-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; animation: fadeUp .25s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .card-top { display: flex; align-items: center; padding: 11px 14px; border-bottom: 1px solid var(--border); gap: 8px; }
+    .card-num { font-size: 11px; font-weight: 600; color: #bbb; letter-spacing: 0.04em; flex-shrink: 0; }
+    .card-title { font-size: 13px; font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+    .card-actions { display: flex; gap: 5px; flex-shrink: 0; }
+    .qr-area { display: flex; align-items: center; justify-content: center; padding: 20px; background: #fafafa; }
+    .qr-area canvas, .qr-area img { border-radius: 6px; display: block; max-width: 100%; }
+    .card-footer { padding: 10px 14px 12px; }
+    .card-url { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 6px; }
+    .card-url a { color: #555; text-decoration: none; }
+    .card-url a:hover { text-decoration: underline; }
+    .card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .tag { font-size: 11px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px; }
+    .color-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,0.1); }
+    #empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; display: none; }
+    #empty-state.visible { display: block; }
+    .empty-icon { font-size: 44px; margin-bottom: 12px; opacity: .3; }
+    #empty-state p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .modal-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 20px; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; width: min(420px, 100%); transform: translateY(12px); transition: transform .2s; }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal h3 { font-size: .95rem; font-weight: 600; margin-bottom: 6px; }
+    .modal p { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    #toast { position: fixed; bottom: 22px; right: 22px; z-index: 9999; background: var(--text); color: #fff; border-radius: 9px; padding: 9px 16px; font-size: 13px; display: flex; align-items: center; gap: 8px; transform: translateY(56px); opacity: 0; transition: all .22s ease; }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
+    .shake { animation: shake .3s ease; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
   </style>
 </head>
 <body>
 <div class="page">
 
   <header>
-    <div class="logo-badge"><span>⚡</span> QR Gen Studio</div>
-    <h1>QR Code Generator</h1>
-    <p>เพิ่มลิงก์ ปรับแต่ง และดาวน์โหลด QR Code ได้ทันที</p>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx=".5"/>
+            <rect x="18" y="14" width="3" height="3" rx=".5"/><rect x="14" y="18" width="3" height="3" rx=".5"/>
+            <rect x="18" y="18" width="3" height="3" rx=".5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">QR Gen Studio</div>
+          <div class="brand-sub">สร้าง QR Code ได้ง่าย</div>
+        </div>
+      </div>
+      <div class="count-pill">ทั้งหมด <strong id="count">0</strong> รายการ</div>
+    </div>
   </header>
 
-  <!-- Add Panel -->
-  <div class="add-panel">
-    <div class="section-label">🔗 เพิ่ม QR Code ใหม่</div>
+  <div class="panel">
+    <div class="panel-title">เพิ่ม QR Code</div>
 
-    <div class="field-row">
+    <div class="field">
+      <label for="input-url">URL หรือข้อความ <span style="color:var(--danger)">*</span></label>
+      <input type="url" id="input-url" placeholder="https://example.com" />
+    </div>
+
+    <div class="add-row" style="margin-bottom:16px">
       <div>
         <label for="input-label">ชื่อ / คำอธิบาย</label>
-        <input type="text" id="input-label" placeholder="เช่น เว็บไซต์หลัก, Instagram, ฯลฯ" />
+        <input type="text" id="input-label" placeholder="เช่น เว็บไซต์หลัก, Instagram" />
       </div>
-      <div>
-        <label for="input-ec">Error Correction</label>
-        <select id="input-ec">
-          <option value="L">L — ต่ำ (7%)</option>
-          <option value="M" selected>M — กลาง (15%)</option>
-          <option value="Q">Q — สูง (25%)</option>
-          <option value="H">H — สูงสุด (30%) ← แนะนำเมื่อใส่โลโก้</option>
-        </select>
-      </div>
-      <div style="display:flex;align-items:flex-end">
-        <button class="btn btn-primary" id="btn-add" onclick="addQR()" style="width:100%">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+      <div style="align-self:flex-end">
+        <button class="btn btn-primary" onclick="addQR()">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
           สร้าง QR
         </button>
       </div>
     </div>
 
-    <div style="margin-bottom:18px">
-      <label for="input-url">URL หรือข้อความ <span style="color:var(--danger)">*</span></label>
-      <input type="url" id="input-url" placeholder="https://example.com" />
-    </div>
-
     <div class="divider"></div>
-    <div class="section-label" style="margin-bottom:14px">🎨 ปรับแต่ง</div>
+    <div class="panel-title">ตั้งค่า</div>
 
-    <div class="customize-grid">
+    <div class="grid-4" style="margin-bottom:16px">
       <div>
-        <label>สี QR (เข้ม)</label>
-        <div class="color-field">
+        <label>สี QR</label>
+        <div class="color-row">
           <input type="color" id="color-dark" value="#000000" oninput="syncHex('color-dark','hex-dark')"/>
-          <input type="text" id="hex-dark" class="color-hex" value="#000000" maxlength="7" oninput="syncColor('hex-dark','color-dark')" />
+          <input type="text" id="hex-dark" class="color-hex" value="#000000" maxlength="7" oninput="syncColor('hex-dark','color-dark')"/>
         </div>
       </div>
       <div>
         <label>สีพื้นหลัง</label>
-        <div class="color-field">
+        <div class="color-row">
           <input type="color" id="color-light" value="#ffffff" oninput="syncHex('color-light','hex-light')"/>
-          <input type="text" id="hex-light" class="color-hex" value="#ffffff" maxlength="7" oninput="syncColor('hex-light','color-light')" />
+          <input type="text" id="hex-light" class="color-hex" value="#ffffff" maxlength="7" oninput="syncColor('hex-light','color-light')"/>
         </div>
       </div>
       <div>
         <label for="input-size">ขนาด (px)</label>
-        <input type="text" id="input-size" value="256" placeholder="256" />
+        <input type="text" id="input-size" value="256" placeholder="256"/>
       </div>
       <div>
-        <label for="input-margin">Margin (modules)</label>
-        <input type="text" id="input-margin" value="4" placeholder="4" />
+        <label for="input-ec">Error Correction</label>
+        <select id="input-ec">
+          <option value="L">L — 7%</option>
+          <option value="M" selected>M — 15%</option>
+          <option value="Q">Q — 25%</option>
+          <option value="H">H — 30%</option>
+        </select>
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-      <div>
-        <label style="margin-bottom:6px;display:block">โลโก้ตรงกลาง <span style="color:var(--muted)">(ไม่บังคับ)</span></label>
-        <div style="display:flex;gap:8px;align-items:center">
-          <label class="btn btn-ghost btn-sm" style="cursor:pointer">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>
-            เลือกรูป
-            <input type="file" id="input-logo" accept="image/*" style="display:none" onchange="previewLogo(this)"/>
-          </label>
-          <button class="btn btn-ghost btn-sm" onclick="clearLogo()">✕ ลบโลโก้</button>
-          <img id="logo-preview" src="" alt="" style="height:36px;width:36px;object-fit:contain;border-radius:6px;display:none;border:1px solid var(--border);" />
-        </div>
+    <div>
+      <label>โลโก้ตรงกลาง <span style="font-weight:400;color:#aaa">(ไม่บังคับ — แนะนำ EC = H)</span></label>
+      <div class="logo-upload">
+        <label class="logo-file-btn">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>
+          เลือกรูป
+          <input type="file" id="input-logo" accept="image/*" onchange="previewLogo(this)"/>
+        </label>
+        <button class="btn btn-ghost btn-sm" onclick="clearLogo()">ลบโลโก้</button>
+        <img id="logo-preview" src="" alt="" />
       </div>
     </div>
   </div>
 
-  <!-- Toolbar -->
   <div class="toolbar">
-    <div class="count-badge">QR Code ทั้งหมด: <strong id="count">0</strong> รายการ</div>
-    <div class="toolbar-actions">
+    <div class="toolbar-left">QR Code ทั้งหมด <strong id="count2">0</strong> รายการ</div>
+    <div class="toolbar-right">
       <button class="btn btn-ghost btn-sm" onclick="downloadAll()">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/></svg>
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/></svg>
         ดาวน์โหลดทั้งหมด
       </button>
       <button class="btn btn-danger btn-sm" onclick="confirmClearAll()">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4h6v3M4 7h16"/></svg>
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4h6v3M4 7h16"/></svg>
         ลบทั้งหมด
       </button>
     </div>
   </div>
 
-  <!-- Cards -->
   <div id="cards-grid">
     <div id="empty-state" class="visible">
       <div class="empty-icon">🔳</div>
-      <p>ยังไม่มี QR Code<br>กรอกลิงก์แล้วกด <strong>สร้าง QR</strong> ด้านบน</p>
+      <p>ยังไม่มี QR Code<br>กรอก URL แล้วกด <strong>สร้าง QR</strong> ด้านบน</p>
     </div>
   </div>
 
 </div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal">
     <h3 id="modal-title">ยืนยันการลบ</h3>
@@ -399,10 +244,9 @@
   </div>
 </div>
 
-<!-- Toast -->
 <div id="toast">
-  <span id="toast-icon">✅</span>
-  <span id="toast-msg">สำเร็จ!</span>
+  <span id="toast-icon">✓</span>
+  <span id="toast-msg">สำเร็จ</span>
 </div>
 
 <script>
@@ -413,6 +257,7 @@
   function syncHex(colorId, hexId) {
     document.getElementById(hexId).value = document.getElementById(colorId).value;
   }
+
   function syncColor(hexId, colorId) {
     const v = document.getElementById(hexId).value;
     if (/^#[0-9a-fA-F]{6}$/.test(v)) document.getElementById(colorId).value = v;
@@ -425,33 +270,37 @@
     reader.onload = e => {
       logoDataUrl = e.target.result;
       const prev = document.getElementById('logo-preview');
-      prev.src = logoDataUrl; prev.style.display = 'block';
+      prev.src = logoDataUrl;
+      prev.style.display = 'block';
+      const ec = document.getElementById('input-ec');
+      if (ec && (ec.value === 'L' || ec.value === 'M')) ec.value = 'H';
     };
     reader.readAsDataURL(file);
   }
+
   function clearLogo() {
     logoDataUrl = null;
     document.getElementById('input-logo').value = '';
     const prev = document.getElementById('logo-preview');
-    prev.src = ''; prev.style.display = 'none';
+    prev.src = '';
+    prev.style.display = 'none';
   }
 
   function addQR() {
     const url   = document.getElementById('input-url').value.trim();
     const label = document.getElementById('input-label').value.trim() || url;
-    if (!url) { toast('⚠️', 'กรุณากรอก URL ก่อน'); shakeInput('input-url'); return; }
+    if (!url) { toast('⚠', 'กรุณากรอก URL ก่อน'); shakeInput('input-url'); return; }
 
-    const size   = Math.min(Math.max(parseInt(document.getElementById('input-size').value) || 256, 64), 1024);
-    const margin = Math.min(Math.max(parseInt(document.getElementById('input-margin').value) ?? 4, 0), 20);
-    const ec     = document.getElementById('input-ec').value;
-    const dark   = document.getElementById('hex-dark').value || '#000000';
-    const light  = document.getElementById('hex-light').value || '#ffffff';
+    const size  = Math.min(Math.max(parseInt(document.getElementById('input-size').value) || 256, 64), 1024);
+    const ec    = document.getElementById('input-ec').value;
+    const dark  = document.getElementById('hex-dark').value || '#000000';
+    const light = document.getElementById('hex-light').value || '#ffffff';
 
-    const item = { id: ++idCounter, label, url, opts: { size, margin, ec, dark, light }, logoDataUrl: logoDataUrl || null };
+    const item = { id: ++idCounter, label, url, opts: { size, ec, dark, light }, logoDataUrl: logoDataUrl || null };
     items.push(item);
     renderCard(item);
     updateCount();
-    toast('✅', `เพิ่มแล้ว: ${label}`);
+    toast('✓', 'เพิ่มแล้ว: ' + label);
     document.getElementById('input-url').value = '';
     document.getElementById('input-label').value = '';
   }
@@ -461,38 +310,36 @@
     const o = item.opts;
     const card = document.createElement('div');
     card.className = 'qr-card';
-    card.id = `card-${item.id}`;
-    card.innerHTML = `
-      <div class="card-header">
-        <span class="card-num">#${item.id}</span>
-        <span class="card-title" title="${esc(item.label)}">${esc(item.label)}</span>
-        <div class="card-actions">
-          <button class="btn btn-download" onclick="downloadQR(${item.id})" title="ดาวน์โหลด PNG">
-            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/></svg>
-            ดาวน์โหลด
-          </button>
-          <button class="btn btn-danger" style="padding:8px 10px;border-radius:10px;font-size:13px" onclick="confirmDelete(${item.id})" title="ลบ">
-            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4h6v3M4 7h16"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="qr-wrapper" id="qr-${item.id}"></div>
-      <div class="card-meta">
-        <div class="card-url"><a href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.url)}</a></div>
-        <div class="card-opts">
-          <span><span class="color-dot" style="background:${esc(o.dark)}"></span> ${esc(o.dark)}</span>
-          <span><span class="color-dot" style="background:${esc(o.light)};border-color:rgba(255,255,255,0.25)"></span> ${esc(o.light)}</span>
-          <span>📐 ${o.size}px</span>
-          <span>EC: ${o.ec}</span>
-        </div>
-      </div>
-    `;
+    card.id = 'card-' + item.id;
+    card.innerHTML =
+      '<div class="card-top">' +
+        '<span class="card-num">#' + item.id + '</span>' +
+        '<span class="card-title" title="' + esc(item.label) + '">' + esc(item.label) + '</span>' +
+        '<div class="card-actions">' +
+          '<button class="btn btn-ghost btn-icon" onclick="downloadQR(' + item.id + ')" title="ดาวน์โหลด">' +
+            '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/></svg>' +
+          '</button>' +
+          '<button class="btn btn-icon" style="background:transparent;border:1px solid #f5c6c6;color:var(--danger)" onclick="confirmDelete(' + item.id + ')" title="ลบ">' +
+            '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="qr-area" id="qr-' + item.id + '"></div>' +
+      '<div class="card-footer">' +
+        '<div class="card-url"><a href="' + esc(item.url) + '" target="_blank" rel="noopener">' + esc(item.url) + '</a></div>' +
+        '<div class="card-tags">' +
+          '<span class="tag"><span class="color-dot" style="background:' + esc(o.dark) + '"></span>' + esc(o.dark) + '</span>' +
+          '<span class="tag">' + o.size + 'px</span>' +
+          '<span class="tag">EC:' + o.ec + '</span>' +
+          (item.logoDataUrl ? '<span class="tag">🖼 โลโก้</span>' : '') +
+        '</div>' +
+      '</div>';
     document.getElementById('cards-grid').appendChild(card);
     generateQR(item);
   }
 
   function generateQR(item) {
-    const container = document.getElementById(`qr-${item.id}`);
+    const container = document.getElementById('qr-' + item.id);
     container.innerHTML = '';
     const o = item.opts;
     new QRCode(container, {
@@ -503,88 +350,97 @@
       colorLight: o.light,
       correctLevel: QRCode.CorrectLevel[o.ec],
     });
-    if (item.logoDataUrl) setTimeout(() => overlayLogo(container, item), 150);
+    setTimeout(function() {
+      const canvas = container.querySelector('canvas');
+      const imgEl  = container.querySelector('img');
+      if (canvas) canvas.style.display = 'block';
+      if (imgEl)  imgEl.style.display  = 'none';
+      if (item.logoDataUrl) overlayLogo(container, item);
+    }, 60);
   }
 
   function overlayLogo(container, item) {
     const canvas = container.querySelector('canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const s = item.opts.size;
+    const s  = item.opts.size;
     const ls = s * 0.22;
-    const x = (s - ls) / 2, y = (s - ls) / 2;
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(s / 2, s / 2, ls / 2 + 5, 0, Math.PI * 2);
-    ctx.fillStyle = '#ffffff';
-    ctx.fill();
-    ctx.restore();
+    const x  = (s - ls) / 2;
+    const y  = (s - ls) / 2;
     const img = new Image();
-    img.onload = () => {
+    img.onload = function() {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(s / 2, s / 2, ls / 2 + 5, 0, Math.PI * 2);
+      ctx.fillStyle = item.opts.light || '#ffffff';
+      ctx.fill();
+      ctx.restore();
       ctx.save();
       ctx.beginPath();
       ctx.arc(s / 2, s / 2, ls / 2, 0, Math.PI * 2);
       ctx.clip();
       ctx.drawImage(img, x, y, ls, ls);
       ctx.restore();
+      const imgEl = container.querySelector('img');
+      if (imgEl) imgEl.style.display = 'none';
     };
     img.src = item.logoDataUrl;
   }
 
   function downloadQR(id) {
-    const item = items.find(i => i.id === id);
+    const item = items.find(function(i) { return i.id === id; });
     if (!item) return;
-    const canvas = document.querySelector(`#qr-${id} canvas`);
-    if (!canvas) { toast('⚠️', 'ไม่พบ canvas'); return; }
+    const canvas = document.querySelector('#qr-' + id + ' canvas');
+    if (!canvas) { toast('⚠', 'ไม่พบ QR image'); return; }
     const a = document.createElement('a');
-    a.download = `qr-${slug(item.label)}-${id}.png`;
+    a.download = 'qr-' + slug(item.label) + '-' + id + '.png';
     a.href = canvas.toDataURL('image/png');
     a.click();
-    toast('⬇️', `ดาวน์โหลด: ${item.label}`);
+    toast('↓', 'ดาวน์โหลด: ' + item.label);
   }
 
   function downloadAll() {
-    if (!items.length) { toast('⚠️', 'ไม่มี QR Code'); return; }
-    items.forEach((item, i) => setTimeout(() => downloadQR(item.id), i * 350));
-    toast('⬇️', `กำลังดาวน์โหลด ${items.length} รายการ...`);
+    if (!items.length) { toast('⚠', 'ไม่มี QR Code'); return; }
+    items.forEach(function(item, i) { setTimeout(function() { downloadQR(item.id); }, i * 350); });
+    toast('↓', 'กำลังดาวน์โหลด ' + items.length + ' รายการ...');
   }
 
   function confirmDelete(id) {
-    const item = items.find(i => i.id === id);
-    document.getElementById('modal-title').textContent = 'ยืนยันการลบ';
-    document.getElementById('modal-body').textContent = `ลบ QR Code "${item.label}" ออกจากรายการ?`;
-    document.getElementById('modal-confirm').onclick = () => { deleteQR(id); closeModal(); };
+    const item = items.find(function(i) { return i.id === id; });
+    document.getElementById('modal-title').textContent = 'ลบ QR Code';
+    document.getElementById('modal-body').textContent = 'ลบ "' + item.label + '" ออกจากรายการ?';
+    document.getElementById('modal-confirm').onclick = function() { deleteQR(id); closeModal(); };
     document.getElementById('modal').classList.add('open');
   }
 
   function deleteQR(id) {
-    items = items.filter(i => i.id !== id);
-    const card = document.getElementById(`card-${id}`);
+    items = items.filter(function(i) { return i.id !== id; });
+    const card = document.getElementById('card-' + id);
     if (card) {
-      card.style.transition = 'all .25s ease';
+      card.style.transition = 'all .2s ease';
       card.style.opacity = '0';
-      card.style.transform = 'scale(0.9)';
-      setTimeout(() => card.remove(), 270);
+      card.style.transform = 'scale(0.96)';
+      setTimeout(function() { card.remove(); }, 220);
     }
     updateCount();
     if (!items.length) document.getElementById('empty-state').classList.add('visible');
-    toast('🗑️', 'ลบแล้ว');
+    toast('✓', 'ลบแล้ว');
   }
 
   function confirmClearAll() {
-    if (!items.length) { toast('⚠️', 'ไม่มี QR Code'); return; }
-    document.getElementById('modal-title').textContent = 'ลบทั้งหมด?';
-    document.getElementById('modal-body').textContent = `ลบ QR Code ทั้งหมด ${items.length} รายการ?`;
-    document.getElementById('modal-confirm').onclick = () => { clearAll(); closeModal(); };
+    if (!items.length) { toast('⚠', 'ไม่มี QR Code'); return; }
+    document.getElementById('modal-title').textContent = 'ลบทั้งหมด';
+    document.getElementById('modal-body').textContent = 'ลบ QR Code ทั้งหมด ' + items.length + ' รายการ?';
+    document.getElementById('modal-confirm').onclick = function() { clearAll(); closeModal(); };
     document.getElementById('modal').classList.add('open');
   }
 
   function clearAll() {
     items = [];
-    document.querySelectorAll('.qr-card').forEach(c => c.remove());
+    document.querySelectorAll('.qr-card').forEach(function(c) { c.remove(); });
     updateCount();
     document.getElementById('empty-state').classList.add('visible');
-    toast('🗑️', 'ลบทั้งหมดแล้ว');
+    toast('✓', 'ลบทั้งหมดแล้ว');
   }
 
   function closeModal(e) {
@@ -594,29 +450,41 @@
 
   function shakeInput(id) {
     const el = document.getElementById(id);
-    el.style.borderColor = 'var(--danger)';
-    el.style.animation = 'none';
-    setTimeout(() => { el.style.borderColor = ''; }, 1200);
+    el.classList.remove('shake');
+    void el.offsetWidth;
+    el.classList.add('shake');
+    el.style.borderColor = '#f5c6c6';
+    setTimeout(function() { el.style.borderColor = ''; el.classList.remove('shake'); }, 900);
   }
 
-  document.addEventListener('keydown', e => {
+  document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
     if (e.key === 'Enter' && e.target.id === 'input-url') addQR();
   });
 
-  let toastTimer;
+  var toastTimer;
   function toast(icon, msg) {
     clearTimeout(toastTimer);
     document.getElementById('toast-icon').textContent = icon;
     document.getElementById('toast-msg').textContent = msg;
     const el = document.getElementById('toast');
     el.classList.add('show');
-    toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    toastTimer = setTimeout(function() { el.classList.remove('show'); }, 2800);
   }
 
-  function updateCount() { document.getElementById('count').textContent = items.length; }
-  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,30) || 'qr'; }
+  function updateCount() {
+    const n = items.length;
+    document.getElementById('count').textContent = n;
+    document.getElementById('count2').textContent = n;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function slug(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,30) || 'qr';
+  }
 </script>
 </body>
 </html>
