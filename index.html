@@ -235,7 +235,38 @@
       gap: 12px;
       padding: 8px 10px 8px 14px;
       border-radius: var(--radius-pill);
-      transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo);
+      background: rgba(255, 255, 255, 0.78);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
+      backdrop-filter: blur(12px) saturate(140%);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+        0 6px 20px -12px rgba(24, 24, 27, 0.12);
+      transition:
+        width 0.55s var(--ease-out-expo),
+        transform 0.55s var(--ease-out-expo),
+        background 0.45s ease,
+        border-color 0.45s ease,
+        box-shadow 0.55s var(--ease-out-expo),
+        backdrop-filter 0.45s ease,
+        -webkit-backdrop-filter 0.45s ease;
+    }
+
+    .navbar.is-scrolled {
+      width: min(760px, calc(100% - 8px));
+      transform: translateY(2px);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0.22));
+      -webkit-backdrop-filter: blur(26px) saturate(210%);
+      backdrop-filter: blur(26px) saturate(210%);
+      border-color: rgba(255, 255, 255, 0.72);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.3),
+        0 20px 46px -14px rgba(24, 24, 27, 0.24);
+    }
+
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .navbar.is-scrolled { background: rgba(255, 255, 255, 0.92); }
     }
 
     .brand {
@@ -1517,7 +1548,7 @@
 
   <!-- Floating Liquid Glass Navbar -->
   <header class="navbar-wrap">
-    <nav class="navbar glass-strong" aria-label="แถบนำทางหลัก">
+    <nav class="navbar" id="main-navbar" aria-label="แถบนำทางหลัก">
       <a href="#top" class="brand" aria-label="PortQR หน้าแรก">
         <img src="./favicon.svg" alt="" width="34" height="34" class="brand-logo" />
         <span class="brand-title">Port<span>QR</span></span>
@@ -2553,6 +2584,14 @@
       els.policyDialog.addEventListener('click', (e) => {
         if (e.target === els.policyDialog) els.policyDialog.close();
       });
+
+      // Floating Liquid Glass navbar scroll morph
+      const mainNavbar = $('main-navbar');
+      const syncNavbarScroll = () => {
+        if (mainNavbar) mainNavbar.classList.toggle('is-scrolled', window.scrollY > 18);
+      };
+      syncNavbarScroll();
+      window.addEventListener('scroll', syncNavbarScroll, { passive: true });
 
       // Hydrate saved items on DOMContentLoaded (after defer qrcode.min.js loads)
       window.addEventListener('DOMContentLoaded', () => {
