@@ -977,6 +977,60 @@
       color: #ffffff;
     }
 
+    .pill-group-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+
+    .style-grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      .style-grid { grid-template-columns: repeat(3, 1fr); }
+      .style-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .style-tile {
+      appearance: none;
+      border: 1.5px solid rgba(24, 24, 27, 0.1);
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--muted);
+      border-radius: 14px;
+      padding: 8px 4px;
+      min-height: 62px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: transform 0.22s var(--ease-spring), background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .style-tile:hover {
+      background: #ffffff;
+      color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    .style-tile[aria-pressed="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #ffffff;
+      box-shadow: 0 8px 18px -10px rgba(24, 24, 27, 0.65);
+    }
+
     /* ---------- Live Preview Card ---------- */
     .preview-card {
       position: sticky;
@@ -1760,10 +1814,75 @@
             <!-- Collapsible Advanced Options -->
             <details class="advanced-box customize-step">
               <summary>
-                <span>ปรับแต่งเพิ่มเติม (ขนาดรูป, ลาย QR)</span>
+                <span>ปรับแต่งเพิ่มเติม (ดีไซน์ QR, ขนาดรูป)</span>
                 <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
               </summary>
               <div class="advanced-body">
+                <div>
+                  <span class="field-label"><span>รูปทรงลายจุด</span></span>
+                  <div class="style-grid" role="group" aria-label="รูปทรงจุด QR Code">
+                    <button type="button" class="style-tile" data-dot="square" aria-pressed="true">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="7" height="7"/><rect x="11" y="2" width="7" height="7"/><rect x="2" y="11" width="7" height="7"/><rect x="11" y="11" width="7" height="7"/></svg>
+                      <span>เหลี่ยม</span>
+                    </button>
+                    <button type="button" class="style-tile" data-dot="rounded" aria-pressed="false">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><rect x="2" y="2" width="7" height="7" rx="2.5"/><rect x="11" y="2" width="7" height="7" rx="2.5"/><rect x="2" y="11" width="7" height="7" rx="2.5"/><rect x="11" y="11" width="7" height="7" rx="2.5"/></svg>
+                      <span>โค้งมน</span>
+                    </button>
+                    <button type="button" class="style-tile" data-dot="dots" aria-pressed="false">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><circle cx="5.5" cy="5.5" r="3.4"/><circle cx="14.5" cy="5.5" r="3.4"/><circle cx="5.5" cy="14.5" r="3.4"/><circle cx="14.5" cy="14.5" r="3.4"/></svg>
+                      <span>จุดกลม</span>
+                    </button>
+                    <button type="button" class="style-tile" data-dot="classy" aria-pressed="false">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 2h4v4a3 3 0 0 1-3 3H2V5a3 3 0 0 1 3-3zm9 0h4v4a3 3 0 0 1-3 3h-4V5a3 3 0 0 1 3-3zM5 11h4v4a3 3 0 0 1-3 3H2v-4a3 3 0 0 1 3-3zm9 0h4v4a3 3 0 0 1-3 3h-4v-4a3 3 0 0 1 3-3z"/></svg>
+                      <span>ใบไม้</span>
+                    </button>
+                    <button type="button" class="style-tile" data-dot="diamond" aria-pressed="false">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><polygon points="5.5,1.8 9.2,5.5 5.5,9.2 1.8,5.5"/><polygon points="14.5,1.8 18.2,5.5 14.5,9.2 10.8,5.5"/><polygon points="5.5,10.8 9.2,14.5 5.5,18.2 1.8,14.5"/><polygon points="14.5,10.8 18.2,14.5 14.5,18.2 10.8,14.5"/></svg>
+                      <span>เพชร</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="field-label"><span>รูปทรงกรอบ 3 มุม</span></span>
+                  <div class="style-grid style-grid-4" role="group" aria-label="รูปทรงกรอบมุม QR Code">
+                    <button type="button" class="style-tile" data-eye="square" aria-pressed="true">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="2.5" y="2.5" width="15" height="15"/><rect x="7" y="7" width="6" height="6" fill="currentColor" stroke="none"/></svg>
+                      <span>เหลี่ยม</span>
+                    </button>
+                    <button type="button" class="style-tile" data-eye="rounded" aria-pressed="false">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="2.5" y="2.5" width="15" height="15" rx="4.5"/><rect x="7" y="7" width="6" height="6" rx="2" fill="currentColor" stroke="none"/></svg>
+                      <span>โค้งมน</span>
+                    </button>
+                    <button type="button" class="style-tile" data-eye="circle" aria-pressed="false">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><circle cx="10" cy="10" r="3.3" fill="currentColor" stroke="none"/></svg>
+                      <span>วงกลม</span>
+                    </button>
+                    <button type="button" class="style-tile" data-eye="leaf" aria-pressed="false">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M8 2.5h9.5V12a5.5 5.5 0 0 1-5.5 5.5H2.5V8A5.5 5.5 0 0 1 8 2.5z"/><circle cx="10" cy="10" r="3" fill="currentColor" stroke="none"/></svg>
+                      <span>ใบไม้</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="two-col">
+                  <div>
+                    <span class="field-label"><span>โหมดสีลาย</span></span>
+                    <div class="pill-group-2" role="group" aria-label="โหมดสีของ QR Code">
+                      <button type="button" class="pill-choice" data-fill="solid" aria-pressed="true">สีเดียว</button>
+                      <button type="button" class="pill-choice" data-fill="gradient" aria-pressed="false">ไล่สี</button>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="field-label"><span>มุมกรอบรูป</span></span>
+                    <div class="pill-group-2" role="group" aria-label="รูปทรงมุมกรอบนอกของไฟล์ PNG">
+                      <button type="button" class="pill-choice" data-frame="square" aria-pressed="true">เหลี่ยม</button>
+                      <button type="button" class="pill-choice" data-frame="rounded" aria-pressed="false">โค้งมน</button>
+                    </div>
+                  </div>
+                </div>
+
                 <div>
                   <span class="field-label"><span>ขนาดรูปตอนดาวน์โหลด</span></span>
                   <div class="pill-group" role="group" aria-label="ขนาดความคมชัดของไฟล์ PNG">
@@ -1963,6 +2082,10 @@
       let darkColor = '#18181b';
       let lightColor = '#ffffff';
       let ecLevel = 'M';
+      let dotStyle = 'square';
+      let eyeStyle = 'square';
+      let fillMode = 'solid';
+      let frameStyle = 'square';
       let logoDataUrl = null;
       let items = [];
       let idCounter = 0;
@@ -2082,33 +2205,170 @@
         els.contrastWarn.classList.toggle('visible', ratio < 3.0);
       }
 
-      // Render crisp QR with quiet-zone margin + optional centered circular logo onto targetCanvas
+      function pathRoundedRect(ctx, x, y, w, h, radii) {
+        const [tl, tr, br, bl] = Array.isArray(radii) ? radii : [radii, radii, radii, radii];
+        ctx.beginPath();
+        ctx.moveTo(x + tl, y);
+        ctx.lineTo(x + w - tr, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + tr);
+        ctx.lineTo(x + w, y + h - br);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
+        ctx.lineTo(x + bl, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - bl);
+        ctx.lineTo(x, y + tl);
+        ctx.quadraticCurveTo(x, y, x + tl, y);
+        ctx.closePath();
+      }
+
+      function makeGradientSecondColor(hex) {
+        const [r, g, b] = hexToRgb(hex);
+        const [h, s, v] = rgbToHsv(r, g, b);
+        if (s < 0.14) return '#be123c'; // Neutral dark -> subtle rose gradient
+        const nextH = (h + 42) % 360;
+        const nextV = Math.min(0.82, Math.max(0.45, v + 0.14));
+        return hsvToHex(nextH, Math.min(1, s + 0.08), nextV);
+      }
+
+      function isFinderZone(r, c, count) {
+        const inTL = r < 7 && c < 7;
+        const inTR = r < 7 && c >= count - 7;
+        const inBL = r >= count - 7 && c < 7;
+        return inTL || inTR || inBL;
+      }
+
+      function drawFinderEye(ctx, x, y, cell, style, fill, bg) {
+        const s7 = cell * 7;
+        const s5 = cell * 5;
+        const s3 = cell * 3;
+        if (style === 'circle') {
+          const cx = x + s7 / 2;
+          const cy = y + s7 / 2;
+          ctx.fillStyle = fill;
+          ctx.beginPath(); ctx.arc(cx, cy, s7 / 2, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = bg;
+          ctx.beginPath(); ctx.arc(cx, cy, s5 / 2, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = fill;
+          ctx.beginPath(); ctx.arc(cx, cy, s3 / 2, 0, Math.PI * 2); ctx.fill();
+          return;
+        }
+        let rOut = 0, rMid = 0, rIn = 0;
+        if (style === 'rounded') {
+          rOut = cell * 1.9;
+          rMid = cell * 1.25;
+          rIn = cell * 0.9;
+        } else if (style === 'leaf') {
+          rOut = [cell * 2.4, cell * 0.35, cell * 2.4, cell * 0.35];
+          rMid = [cell * 1.6, cell * 0.25, cell * 1.6, cell * 0.25];
+          rIn = [cell * 1.1, cell * 0.2, cell * 1.1, cell * 0.2];
+        }
+        ctx.fillStyle = fill;
+        pathRoundedRect(ctx, x, y, s7, s7, rOut); ctx.fill();
+        ctx.fillStyle = bg;
+        pathRoundedRect(ctx, x + cell, y + cell, s5, s5, rMid); ctx.fill();
+        ctx.fillStyle = fill;
+        pathRoundedRect(ctx, x + cell * 2, y + cell * 2, s3, s3, rIn); ctx.fill();
+      }
+
+      // Render crisp styled QR with quiet-zone margin + optional centered circular logo onto targetCanvas
       function drawQRToCanvas(targetCanvas, text, opts, logoSrc) {
         if (typeof QRCode === 'undefined') return;
         const size = opts.size || 512;
-        const quiet = Math.round(size * 0.075);
+        const quiet = Math.round(size * 0.08);
         const inner = size - quiet * 2;
+        const bg = opts.light || '#ffffff';
+        const dStyle = opts.dotStyle || 'square';
+        const eStyle = opts.eyeStyle || 'square';
+        const fMode = opts.fillMode || 'solid';
+        const rFrame = opts.frameStyle === 'rounded';
 
         els.scratch.innerHTML = '';
-        new QRCode(els.scratch, {
+        const qrInst = new QRCode(els.scratch, {
           text,
-          width: inner,
-          height: inner,
+          width: 128,
+          height: 128,
           colorDark: opts.dark,
-          colorLight: opts.light,
+          colorLight: bg,
           correctLevel: QRCode.CorrectLevel[opts.ec || 'M'],
         });
-
-        const srcCanvas = els.scratch.querySelector('canvas');
-        if (!srcCanvas) return;
 
         targetCanvas.width = size;
         targetCanvas.height = size;
         const ctx = targetCanvas.getContext('2d');
-        ctx.imageSmoothingEnabled = false;
-        ctx.fillStyle = opts.light || '#ffffff';
+        ctx.clearRect(0, 0, size, size);
+
+        ctx.save();
+        if (rFrame) {
+          pathRoundedRect(ctx, 0, 0, size, size, Math.round(size * 0.095));
+          ctx.clip();
+        }
+        ctx.fillStyle = bg;
         ctx.fillRect(0, 0, size, size);
-        ctx.drawImage(srcCanvas, quiet, quiet, inner, inner);
+
+        const model = qrInst && qrInst._oQRCode;
+        if (model && typeof model.getModuleCount === 'function') {
+          const count = model.getModuleCount();
+          const cell = inner / count;
+          let fillStyle = opts.dark || '#18181b';
+          if (fMode === 'gradient') {
+            const grad = ctx.createLinearGradient(quiet, quiet, quiet + inner, quiet + inner);
+            grad.addColorStop(0, fillStyle);
+            grad.addColorStop(1, makeGradientSecondColor(fillStyle));
+            fillStyle = grad;
+          }
+
+          ctx.imageSmoothingEnabled = true;
+
+          // Draw 3 Finder Eyes
+          drawFinderEye(ctx, quiet, quiet, cell, eStyle, fillStyle, bg);
+          drawFinderEye(ctx, quiet + (count - 7) * cell, quiet, cell, eStyle, fillStyle, bg);
+          drawFinderEye(ctx, quiet, quiet + (count - 7) * cell, cell, eStyle, fillStyle, bg);
+
+          // Draw Data Modules
+          ctx.fillStyle = fillStyle;
+          for (let r = 0; r < count; r++) {
+            for (let c = 0; c < count; c++) {
+              if (isFinderZone(r, c, count) || !model.isDark(r, c)) continue;
+              const x = quiet + c * cell;
+              const y = quiet + r * cell;
+
+              if (dStyle === 'square') {
+                ctx.fillRect(x - 0.2, y - 0.2, cell + 0.4, cell + 0.4);
+              } else if (dStyle === 'rounded') {
+                const pad = cell * 0.07;
+                pathRoundedRect(ctx, x + pad, y + pad, cell - pad * 2, cell - pad * 2, cell * 0.34);
+                ctx.fill();
+              } else if (dStyle === 'dots') {
+                ctx.beginPath();
+                ctx.arc(x + cell / 2, y + cell / 2, cell * 0.43, 0, Math.PI * 2);
+                ctx.fill();
+              } else if (dStyle === 'classy') {
+                const pad = cell * 0.06;
+                const rad = cell * 0.44;
+                pathRoundedRect(ctx, x + pad, y + pad, cell - pad * 2, cell - pad * 2, [rad, 0, rad, 0]);
+                ctx.fill();
+              } else if (dStyle === 'diamond') {
+                const cx = x + cell / 2;
+                const cy = y + cell / 2;
+                const half = cell * 0.48;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy - half);
+                ctx.lineTo(cx + half, cy);
+                ctx.lineTo(cx, cy + half);
+                ctx.lineTo(cx - half, cy);
+                ctx.closePath();
+                ctx.fill();
+              }
+            }
+          }
+        } else {
+          const srcCanvas = els.scratch.querySelector('canvas');
+          if (srcCanvas) {
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(srcCanvas, quiet, quiet, inner, inner);
+          }
+        }
+
+        ctx.restore();
 
         if (logoSrc) {
           const img = new Image();
@@ -2122,7 +2382,7 @@
             ctx.save();
             ctx.beginPath();
             ctx.arc(cx, cy, ls / 2 + pad, 0, Math.PI * 2);
-            ctx.fillStyle = opts.light || '#ffffff';
+            ctx.fillStyle = bg;
             ctx.fill();
             ctx.restore();
 
@@ -2162,7 +2422,7 @@
         drawQRToCanvas(
           els.liveCanvas,
           text,
-          { size: qrSize, dark: darkColor, light: lightColor, ec: ecLevel },
+          { size: qrSize, dark: darkColor, light: lightColor, ec: ecLevel, dotStyle, eyeStyle, fillMode, frameStyle },
           logoDataUrl
         );
       }
@@ -2349,6 +2609,43 @@
 
       loadTargetIntoPicker('dark');
 
+      // QR Design Style controls (Dot, Eye, Fill Mode, Outer Frame)
+      const dotBtns = Array.from(document.querySelectorAll('.style-tile[data-dot]'));
+      dotBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          dotStyle = btn.dataset.dot;
+          dotBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          scheduleRender();
+        });
+      });
+
+      const eyeBtns = Array.from(document.querySelectorAll('.style-tile[data-eye]'));
+      eyeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          eyeStyle = btn.dataset.eye;
+          eyeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          scheduleRender();
+        });
+      });
+
+      const fillBtns = Array.from(document.querySelectorAll('.pill-choice[data-fill]'));
+      fillBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          fillMode = btn.dataset.fill;
+          fillBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          scheduleRender();
+        });
+      });
+
+      const frameBtns = Array.from(document.querySelectorAll('.pill-choice[data-frame]'));
+      frameBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          frameStyle = btn.dataset.frame;
+          frameBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          scheduleRender();
+        });
+      });
+
       // Size pills
       const sizeBtns = Array.from(document.querySelectorAll('.pill-choice[data-size]'));
       sizeBtns.forEach((btn) => {
@@ -2498,7 +2795,7 @@
           id: ++idCounter,
           label,
           text,
-          opts: { size: qrSize, dark: darkColor, light: lightColor, ec: ecLevel },
+          opts: { size: qrSize, dark: darkColor, light: lightColor, ec: ecLevel, dotStyle, eyeStyle, fillMode, frameStyle },
           logoDataUrl: logoDataUrl || null,
         };
         items.push(item);
