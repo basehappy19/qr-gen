@@ -73,6 +73,7 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="6ab6f74c-b5d4-4793-bda0-d73be67b8145"></script>
 
   <style>
     :root {
@@ -2037,7 +2038,8 @@
           <h4>1. การรับประกันไม่เก็บข้อมูล (Privacy Policy &amp; PDPA)</h4>
           <ul>
             <li><strong>ประมวลผลในอุปกรณ์ของคุณ 100%:</strong> ลิงก์ผลงาน ข้อความ ชื่อบัญชี Instagram รหัสผ่าน Wi-Fi และรูปโลโก้ที่คุณอัปโหลดทั้งหมด ถูกสร้างเป็น QR Code ภายในเบราว์เซอร์ของคุณเท่านั้น ไม่มีการส่ง อัปโหลด หรือจัดเก็บไว้บนเซิร์ฟเวอร์ใด ๆ</li>
-            <li><strong>ไม่มีคุกกี้ติดตามหรือโฆษณา:</strong> เว็บไซต์ไม่เก็บข้อมูลส่วนบุคคล ไม่ติดตามพฤติกรรม และไม่ขายหรือเผยแพร่ข้อมูลให้บุคคลที่สาม สอดคล้องกับ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)</li>
+            <li><strong>ไม่มีคุกกี้ติดตามหรือโฆษณา:</strong> เว็บไซต์ไม่ใช้คุกกี้โฆษณา ไม่เก็บข้อมูลระบุตัวตน และไม่ขายหรือเผยแพร่ข้อมูลให้บุคคลที่สาม สอดคล้องกับ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)</li>
+            <li><strong>สถิติยอดเข้าชมแบบไม่ระบุตัวตน:</strong> เว็บไซต์ใช้ Umami Analytics เพื่อนับยอดผู้เข้าชมและยอดการดาวน์โหลด/คัดลอกรูปเป็นตัวเลขรวมเท่านั้น โดยไม่ใช้คุกกี้ ไม่เก็บข้อมูลส่วนตัว และไม่มีการส่งลิงก์หรือข้อความที่คุณสร้าง QR ออกไปเด็ดขาด</li>
             <li><strong>การบันทึกเฉพาะในเครื่อง (Local Storage):</strong> เมื่อคุณกด "เก็บในรายการ" ข้อมูลจะถูกบันทึกไว้เฉพาะในเบราว์เซอร์ของอุปกรณ์คุณเอง (ไม่บันทึกรูปโลโก้) และคุณสามารถกด "ลบทั้งหมด" เพื่อล้างออกได้ทันทีทุกเมื่อ</li>
             <li><strong>ทรัพยากรภายนอก:</strong> เว็บไซต์เรียกใช้เฉพาะฟอนต์จาก Google Fonts และไลบรารีสร้าง QR จาก cdnjs เพื่อการแสดงผล โดยไม่มีการส่งข้อมูลที่คุณกรอกไปยังบริการเหล่านั้น</li>
           </ul>
@@ -2154,6 +2156,17 @@
         els.toastMsg.textContent = msg;
         els.toast.classList.add('show');
         toastTimer = setTimeout(() => els.toast.classList.remove('show'), 2600);
+      }
+
+      // Privacy-safe anonymous event counter (never sends user URLs/text/personal data)
+      function trackEvent(name, props) {
+        try {
+          if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track(name, props);
+          }
+        } catch {
+          // Ignore if blocked
+        }
       }
 
       function escapeWifi(s) {
@@ -2703,6 +2716,7 @@
         a.download = 'PortQR_' + formatTimestamp() + '.png';
         a.href = canvas.toDataURL('image/png');
         a.click();
+        trackEvent('qr_download', { mode, dotStyle, eyeStyle, fillMode, frameStyle });
         showToast('ดาวน์โหลดรูป PNG แล้ว');
       }
 
@@ -2714,6 +2728,7 @@
         try {
           const blob = await new Promise((res) => canvas.toBlob(res, 'image/png'));
           await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          trackEvent('qr_copy', { mode });
           showToast('คัดลอกรูปแล้ว! กดวางในพอร์ตหรือในงานได้เลย');
         } catch {
           showToast('คัดลอกไม่สำเร็จ ลองกดดาวน์โหลด PNG แทนนะ');
@@ -2802,6 +2817,7 @@
         renderSavedCard(item);
         updateCounts();
         persistItems();
+        trackEvent('qr_save', { mode });
         showToast('เก็บ "' + label + '" ลงรายการแล้ว');
       });
 

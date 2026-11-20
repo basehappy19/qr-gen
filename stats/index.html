@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PortQR Analytics — สถิติการใช้งาน</title>
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <meta name="theme-color" content="#f6f6f9" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --font-sans: "Anuphan", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+      --bg: #f6f6f9;
+      --ink: #18181b;
+      --muted: #52525b;
+      --accent: #be123c;
+      --accent-bright: #e11d48;
+      --accent-soft: rgba(225, 29, 72, 0.1);
+      --ok: #047857;
+      --danger: #b91c1c;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(251, 113, 133, 0.22), transparent 42%),
+        radial-gradient(circle at 88% 14%, rgba(165, 180, 252, 0.24), transparent 44%),
+        radial-gradient(circle at 52% 92%, rgba(253, 230, 138, 0.26), transparent 46%),
+        var(--bg);
+      min-height: 100vh;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .glass {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.48));
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
+        0 12px 40px -14px rgba(24, 24, 27, 0.16);
+    }
+
+    .glass-strong {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.66));
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow:
+        inset 0 1px 0 #ffffff,
+        0 20px 52px -18px rgba(24, 24, 27, 0.22);
+    }
+
+    .wrap {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      padding: 20px 16px 56px;
+    }
+
+    /* Top Bar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 14px 10px 16px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .brand img { width: 32px; height: 32px; border-radius: 9px; }
+    .brand span { color: var(--accent); }
+    .brand small {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(24, 24, 27, 0.06);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1.5px solid transparent;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.22s var(--ease-spring), background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: var(--ink);
+      color: #ffffff;
+      box-shadow: 0 10px 22px -10px rgba(24, 24, 27, 0.55);
+    }
+    .btn-primary:hover { background: #27272a; transform: translateY(-1px); }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--ink);
+      border-color: rgba(24, 24, 27, 0.1);
+    }
+    .btn-glass:hover { background: #ffffff; border-color: rgba(24, 24, 27, 0.2); }
+
+    .btn-danger {
+      background: rgba(185, 28, 28, 0.08);
+      color: var(--danger);
+      border-color: rgba(185, 28, 28, 0.2);
+    }
+    .btn-danger:hover { background: rgba(185, 28, 28, 0.14); }
+
+    /* Auth Gate */
+    .gate-card {
+      max-width: 480px;
+      margin: 48px auto;
+      border-radius: 28px;
+      padding: 28px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .gate-card h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .gate-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1.5px solid rgba(24, 24, 27, 0.12);
+      background: rgba(255, 255, 255, 0.88);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(190, 18, 60, 0.12);
+    }
+
+    .gate-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .gate-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: rgba(24, 24, 27, 0.04);
+      padding: 12px 14px;
+      border-radius: 14px;
+      line-height: 1.6;
+    }
+
+    .gate-hint code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+
+    .err-msg {
+      display: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--danger);
+      background: rgba(185, 28, 28, 0.08);
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+    .err-msg.show { display: block; }
+
+    /* Dashboard */
+    .dashboard { display: none; gap: 18px; }
+    .dashboard.visible { display: grid; }
+
+    /* Range Segmented Control */
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .segmented {
+      display: inline-grid;
+      grid-template-columns: repeat(4, minmax(84px, 1fr));
+      padding: 4px;
+      border-radius: 16px;
+      background: rgba(24, 24, 27, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      gap: 4px;
+    }
+
+    .seg-btn {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--muted);
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .seg-btn[aria-selected="true"] {
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: 0 4px 12px -4px rgba(24, 24, 27, 0.18);
+    }
+
+    .mode-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+
+    .live-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.22);
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .kpi-card {
+      border-radius: 22px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .kpi-label {
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .kpi-val {
+      font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Chart Card */
+    .chart-card {
+      border-radius: 26px;
+      padding: 22px 24px;
+    }
+
+    .chart-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .chart-head h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 300px;
+    }
+
+    #main-chart {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .chart-tooltip {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      pointer-events: none;
+      opacity: 0;
+      padding: 9px 13px;
+      border-radius: 14px;
+      background: rgba(24, 24, 27, 0.9);
+      color: #ffffff;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
+      box-shadow: 0 12px 26px -10px rgba(0, 0, 0, 0.45);
+    }
+
+    .chart-tooltip.show { opacity: 1; }
+
+    /* Breakdown Grid */
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .breakdown-grid { grid-template-columns: 1fr; }
+    }
+
+    .list-card {
+      border-radius: 22px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .list-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .bar-row {
+      display: grid;
+      gap: 4px;
+    }
+
+    .bar-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    .bar-meta span:last-child {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bar-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(24, 24, 27, 0.07);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #fb7185, #be123c);
+      transition: width 0.55s var(--ease-out-expo);
+    }
+
+    .empty-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar glass-strong">
+      <div class="brand">
+        <img src="../favicon.svg" alt="" width="32" height="32" />
+        <div>Port<span>QR</span></div>
+        <small>Analytics</small>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-glass" id="btn-refresh" style="display:none;">รีเฟรช</button>
+        <button type="button" class="btn btn-danger" id="btn-logout" style="display:none;">ล้างคีย์</button>
+      </div>
+    </header>
+
+    <!-- API Key Gate (never hardcoded in public repo) -->
+    <section class="gate-card glass-strong" id="gate-view">
+      <div>
+        <h1>เข้าดูสถิติ PortQR</h1>
+        <p>กรอก Umami API Key เพื่อดึงข้อมูลจริงแบบเรียลไทม์ (คีย์จะเก็บไว้เฉพาะในเบราว์เซอร์ของคุณเท่านั้น)</p>
+      </div>
+
+      <div class="err-msg" id="gate-err"></div>
+
+      <div>
+        <label for="api-key-input" style="display:block;font-size:0.84rem;font-weight:600;margin-bottom:6px;">Umami API Key</label>
+        <input type="password" id="api-key-input" class="input" placeholder="api_xxxxxxxxxxxxxxxx" autocomplete="off" />
+      </div>
+
+      <div class="gate-actions">
+        <button type="button" class="btn btn-primary" id="btn-connect">เชื่อมต่อข้อมูลจริง</button>
+        <button type="button" class="btn btn-glass" id="btn-demo">ดูตัวอย่างกราฟ</button>
+      </div>
+
+      <div class="gate-hint">
+        <strong>วิธีสร้าง API Key (ทำครั้งเดียว):</strong><br>
+        เข้า <code>cloud.umami.is</code> → เมนู <code>Settings</code> → <code>API Keys</code> → กด <code>Create key</code> แล้วนำมาวางตรงนี้ (Website ID ผูกไว้แล้วอัตโนมัติ)
+      </div>
+    </section>
+
+    <!-- Analytics Dashboard -->
+    <main class="dashboard" id="dashboard-view">
+      <div class="controls-row">
+        <div class="segmented" role="tablist" aria-label="ช่วงเวลาของกราฟ">
+          <button type="button" class="seg-btn" role="tab" data-range="hour" aria-selected="true">รายชั่วโมง</button>
+          <button type="button" class="seg-btn" role="tab" data-range="day" aria-selected="false">รายวัน</button>
+          <button type="button" class="seg-btn" role="tab" data-range="month" aria-selected="false">รายเดือน</button>
+          <button type="button" class="seg-btn" role="tab" data-range="year" aria-selected="false">รายปี</button>
+        </div>
+        <div class="mode-banner glass" id="status-banner">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span id="status-text">กำลังโหลด...</span>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <section class="kpi-grid" aria-label="สรุปสถิติหลัก">
+        <article class="kpi-card glass">
+          <span class="kpi-label"><span class="live-dot" style="width:7px;height:7px;"></span> ออนไลน์ตอนนี้</span>
+          <strong class="kpi-val" id="kpi-active">0</strong>
+          <span class="kpi-sub">ผู้ใช้ใน 5 นาทีล่าสุด</span>
+        </article>
+        <article class="kpi-card glass">
+          <span class="kpi-label">ผู้ใช้งาน (Visitors)</span>
+          <strong class="kpi-val" id="kpi-visitors">0</strong>
+          <span class="kpi-sub" id="kpi-range-label">24 ชั่วโมงล่าสุด</span>
+        </article>
+        <article class="kpi-card glass">
+          <span class="kpi-label">ยอดเข้าชม (Pageviews)</span>
+          <strong class="kpi-val" id="kpi-views">0</strong>
+          <span class="kpi-sub">จำนวนครั้งเปิดหน้าเว็บ</span>
+        </article>
+        <article class="kpi-card glass">
+          <span class="kpi-label">สร้าง / โหลด QR</span>
+          <strong class="kpi-val" id="kpi-events">0</strong>
+          <span class="kpi-sub">ดาวน์โหลด + คัดลอก + เก็บไว้</span>
+        </article>
+      </section>
+
+      <!-- Main Time-Series Chart -->
+      <section class="chart-card glass-strong" aria-label="กราฟยอดผู้ใช้งาน">
+        <div class="chart-head">
+          <h2 id="chart-title">กราฟยอดผู้ใช้งานรายชั่วโมง (24 ชม. ล่าสุด)</h2>
+          <div class="legend">
+            <span class="legend-item"><span class="legend-dot" style="background:#be123c"></span> Pageviews</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#18181b"></span> Visitors</span>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="main-chart"></canvas>
+          <div class="chart-tooltip" id="chart-tooltip"></div>
+        </div>
+      </section>
+
+      <!-- Breakdown Cards -->
+      <section class="breakdown-grid" aria-label="สถิติแยกตามหมวดหมู่">
+        <article class="list-card glass">
+          <h3>การใช้งานฟีเจอร์ QR</h3>
+          <div class="bar-list" id="list-events"></div>
+        </article>
+        <article class="list-card glass">
+          <h3>อุปกรณ์ที่เข้ามาใช้</h3>
+          <div class="bar-list" id="list-devices"></div>
+        </article>
+        <article class="list-card glass">
+          <h3>ระบบปฏิบัติการ (OS)</h3>
+          <div class="bar-list" id="list-os"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      const WEBSITE_ID = '6ab6f74c-b5d4-4793-bda0-d73be67b8145';
+      const API_BASE = 'https://api.umami.is/v1';
+      const KEY_STORAGE = 'portqr_umami_api_key';
+
+      let apiKey = localStorage.getItem(KEY_STORAGE) || '';
+      let isDemo = false;
+      let activeRange = 'hour';
+      let chartPoints = [];
+
+      const $ = (id) => document.getElementById(id);
+      const els = {
+        gateView: $('gate-view'),
+        dashboardView: $('dashboard-view'),
+        apiKeyInput: $('api-key-input'),
+        gateErr: $('gate-err'),
+        btnConnect: $('btn-connect'),
+        btnDemo: $('btn-demo'),
+        btnRefresh: $('btn-refresh'),
+        btnLogout: $('btn-logout'),
+        statusText: $('status-text'),
+        kpiActive: $('kpi-active'),
+        kpiVisitors: $('kpi-visitors'),
+        kpiViews: $('kpi-views'),
+        kpiEvents: $('kpi-events'),
+        kpiRangeLabel: $('kpi-range-label'),
+        chartTitle: $('chart-title'),
+        chartCanvas: $('main-chart'),
+        chartTooltip: $('chart-tooltip'),
+        listEvents: $('list-events'),
+        listDevices: $('list-devices'),
+        listOs: $('list-os'),
+        rangeBtns: Array.from(document.querySelectorAll('.seg-btn[data-range]')),
+      };
+
+      const RANGE_META = {
+        hour:  { label: '24 ชั่วโมงล่าสุด', title: 'กราฟยอดผู้ใช้งานรายชั่วโมง (24 ชม. ล่าสุด)', unit: 'hour',  ms: 24 * 3600 * 1000 },
+        day:   { label: '30 วันล่าสุด',      title: 'กราฟยอดผู้ใช้งานรายวัน (30 วันล่าสุด)',      unit: 'day',   ms: 30 * 24 * 3600 * 1000 },
+        month: { label: '12 เดือนล่าสุด',    title: 'กราฟยอดผู้ใช้งานรายเดือน (12 เดือนล่าสุด)',  unit: 'month', ms: 365 * 24 * 3600 * 1000 },
+        year:  { label: 'รายปี (3 ปีล่าสุด)', title: 'กราฟยอดผู้ใช้งานรายปี (3 ปีล่าสุด)',         unit: 'year',  ms: 3 * 365 * 24 * 3600 * 1000 },
+      };
+
+      const EVENT_LABELS = {
+        qr_download: 'ดาวน์โหลด PNG',
+        qr_copy: 'คัดลอกรูป QR',
+        qr_save: 'เก็บในรายการ',
+      };
+
+      function showErr(msg) {
+        els.gateErr.textContent = msg;
+        els.gateErr.classList.toggle('show', Boolean(msg));
+      }
+
+      function num(n) {
+        return Number(n || 0).toLocaleString('th-TH');
+      }
+
+      function formatBucketLabel(iso, range) {
+        const d = new Date(iso);
+        if (isNaN(d)) return String(iso);
+        if (range === 'hour') return d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+        if (range === 'day') return d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
+        if (range === 'month') return d.toLocaleDateString('th-TH', { month: 'short', year: '2-digit' });
+        return String(d.getFullYear());
+      }
+
+      async function umamiFetch(path) {
+        const res = await fetch(`${API_BASE}/websites/${WEBSITE_ID}${path}`, {
+          headers: { 'x-umami-api-key': apiKey, Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      }
+
+      function generateDemoData(range) {
+        const now = Date.now();
+        const counts = { hour: 24, day: 30, month: 12, year: 3 }[range];
+        const stepMs = { hour: 3600e3, day: 86400e3, month: 30 * 86400e3, year: 365 * 86400e3 }[range];
+        const mult = { hour: 1, day: 12, month: 280, year: 2600 }[range];
+        const pageviews = [], sessions = [];
+        let totalV = 0, totalU = 0;
+        for (let i = counts - 1; i >= 0; i--) {
+          const t = new Date(now - i * stepMs).toISOString();
+          const wave = Math.sin(i * 0.55) * 0.35 + 0.75 + Math.random() * 0.35;
+          const pv = Math.max(2, Math.round(wave * 18 * mult));
+          const us = Math.max(1, Math.round(pv * (0.62 + Math.random() * 0.14)));
+          pageviews.push({ x: t, y: pv });
+          sessions.push({ x: t, y: us });
+          totalV += pv; totalU += us;
+        }
+        return {
+          active: 3,
+          stats: { pageviews: { value: totalV }, visitors: { value: totalU } },
+          series: { pageviews, sessions },
+          events: [
+            { x: 'qr_download', y: Math.round(totalU * 0.72) },
+            { x: 'qr_copy', y: Math.round(totalU * 0.41) },
+            { x: 'qr_save', y: Math.round(totalU * 0.18) },
+          ],
+          devices: [
+            { x: 'tablet', y: Math.round(totalU * 0.46) },
+            { x: 'mobile', y: Math.round(totalU * 0.34) },
+            { x: 'desktop', y: Math.round(totalU * 0.20) },
+          ],
+          os: [
+            { x: 'iPadOS / iOS', y: Math.round(totalU * 0.62) },
+            { x: 'Android', y: Math.round(totalU * 0.20) },
+            { x: 'Windows', y: Math.round(totalU * 0.12) },
+            { x: 'macOS', y: Math.round(totalU * 0.06) },
+          ],
+        };
+      }
+
+      function renderBars(container, rows, labelMap = {}) {
+        if (!rows || !rows.length) {
+          container.innerHTML = '<p class="empty-note">ยังไม่มีข้อมูลในช่วงเวลานี้</p>';
+          return;
+        }
+        const top = rows.slice(0, 6);
+        const max = Math.max(...top.map((r) => r.y || 0), 1);
+        container.innerHTML = top.map((r) => {
+          const pct = Math.round(((r.y || 0) / max) * 100);
+          const name = labelMap[r.x] || r.x || 'ไม่ระบุ';
+          return `
+            <div class="bar-row">
+              <div class="bar-meta">
+                <span>${String(name).replace(/</g, '&lt;')}</span>
+                <span>${num(r.y)}</span>
+              </div>
+              <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+            </div>`;
+        }).join('');
+      }
+
+      function drawChart(points) {
+        chartPoints = points;
+        const canvas = els.chartCanvas;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(300, Math.round(rect.width * dpr));
+        canvas.height = Math.max(200, Math.round(rect.height * dpr));
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+        const w = rect.width, h = rect.height;
+        const pad = { top: 20, right: 16, bottom: 34, left: 46 };
+        const plotW = w - pad.left - pad.right;
+        const plotH = h - pad.top - pad.bottom;
+
+        ctx.clearRect(0, 0, w, h);
+        if (!points.length) return;
+
+        const maxVal = Math.max(...points.map((p) => Math.max(p.pv, p.vis)), 4);
+        const niceMax = Math.ceil(maxVal / 4) * 4;
+
+        // Gridlines & Y labels
+        ctx.font = '600 11px Anuphan, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let i = 0; i <= 4; i++) {
+          const val = Math.round((niceMax / 4) * i);
+          const y = pad.top + plotH - (plotH * i) / 4;
+          ctx.strokeStyle = 'rgba(24, 24, 27, 0.07)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(pad.left, y);
+          ctx.lineTo(w - pad.right, y);
+          ctx.stroke();
+          ctx.fillStyle = '#71717a';
+          ctx.fillText(num(val), pad.left - 8, y);
+        }
+
+        const xAt = (i) => points.length === 1 ? pad.left + plotW / 2 : pad.left + (i / (points.length - 1)) * plotW;
+        const yAt = (v) => pad.top + plotH - (v / niceMax) * plotH;
+
+        // Area under Pageviews
+        const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
+        grad.addColorStop(0, 'rgba(225, 29, 72, 0.28)');
+        grad.addColorStop(1, 'rgba(225, 29, 72, 0.01)');
+
+        ctx.beginPath();
+        points.forEach((p, i) => {
+          const x = xAt(i), y = yAt(p.pv);
+          if (i === 0) ctx.moveTo(x, y);
+          else {
+            const px = xAt(i - 1), py = yAt(points[i - 1].pv);
+            const mx = (px + x) / 2;
+            ctx.bezierCurveTo(mx, py, mx, y, x, y);
+          }
+        });
+        ctx.lineTo(xAt(points.length - 1), pad.top + plotH);
+        ctx.lineTo(xAt(0), pad.top + plotH);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Draw smooth line helper
+        function strokeSeries(key, color, width) {
+          ctx.beginPath();
+          points.forEach((p, i) => {
+            const x = xAt(i), y = yAt(p[key]);
+            if (i === 0) ctx.moveTo(x, y);
+            else {
+              const px = xAt(i - 1), py = yAt(points[i - 1][key]);
+              const mx = (px + x) / 2;
+              ctx.bezierCurveTo(mx, py, mx, y, x, y);
+            }
+          });
+          ctx.strokeStyle = color;
+          ctx.lineWidth = width;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        }
+
+        strokeSeries('pv', '#be123c', 2.8);
+        strokeSeries('vis', '#18181b', 2.2);
+
+        // X-axis labels (max ~7 ticks)
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillStyle = '#71717a';
+        const step = Math.max(1, Math.ceil(points.length / 7));
+        points.forEach((p, i) => {
+          if (i % step === 0 || i === points.length - 1) {
+            ctx.fillText(p.label, xAt(i), pad.top + plotH + 10);
+          }
+        });
+      }
+
+      // Hover tooltip on chart
+      els.chartCanvas.addEventListener('pointermove', (e) => {
+        if (!chartPoints.length) return;
+        const rect = els.chartCanvas.getBoundingClientRect();
+        const relX = e.clientX - rect.left - 46;
+        const plotW = rect.width - 62;
+        const idx = Math.round(Math.min(1, Math.max(0, relX / plotW)) * (chartPoints.length - 1));
+        const p = chartPoints[idx];
+        if (!p) return;
+        els.chartTooltip.innerHTML = `<strong>${p.label}</strong><br>Pageviews: ${num(p.pv)} • Visitors: ${num(p.vis)}`;
+        els.chartTooltip.style.left = Math.min(rect.width - 190, Math.max(12, e.clientX - rect.left + 12)) + 'px';
+        els.chartTooltip.classList.add('show');
+      });
+
+      els.chartCanvas.addEventListener('pointerleave', () => {
+        els.chartTooltip.classList.remove('show');
+      });
+
+      window.addEventListener('resize', () => {
+        if (chartPoints.length) drawChart(chartPoints);
+      });
+
+      async function loadStats() {
+        const meta = RANGE_META[activeRange];
+        els.kpiRangeLabel.textContent = meta.label;
+        els.chartTitle.textContent = meta.title;
+        els.statusText.textContent = isDemo ? 'โหมดตัวอย่าง (Demo)' : 'กำลังดึงข้อมูล...';
+
+        let data;
+        if (isDemo) {
+          data = generateDemoData(activeRange);
+        } else {
+          const endAt = Date.now();
+          const startAt = endAt - meta.ms;
+          const tz = encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Bangkok');
+          const q = `startAt=${startAt}&endAt=${endAt}`;
+          try {
+            const [activeRes, statsRes, seriesRes, eventsRes, devicesRes, osRes] = await Promise.all([
+              umamiFetch('/active'),
+              umamiFetch(`/stats?${q}`),
+              umamiFetch(`/pageviews?${q}&unit=${meta.unit}&timezone=${tz}`),
+              umamiFetch(`/metrics?${q}&type=event`),
+              umamiFetch(`/metrics?${q}&type=device`),
+              umamiFetch(`/metrics?${q}&type=os`),
+            ]);
+            data = {
+              active: activeRes.visitors ?? activeRes.x ?? 0,
+              stats: statsRes,
+              series: seriesRes,
+              events: eventsRes,
+              devices: devicesRes,
+              os: osRes,
+            };
+            els.statusText.textContent = 'ข้อมูลจริงจาก Umami • อัปเดตเมื่อ ' + new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+          } catch (err) {
+            els.statusText.textContent = 'เชื่อมต่อไม่สำเร็จ (' + err.message + ')';
+            return;
+          }
+        }
+
+        const pvTotal = data.stats?.pageviews?.value ?? data.stats?.pageviews ?? 0;
+        const visTotal = data.stats?.visitors?.value ?? data.stats?.visitors ?? 0;
+        const evTotal = (data.events || []).reduce((s, r) => s + (r.y || 0), 0);
+
+        els.kpiActive.textContent = num(data.active);
+        els.kpiVisitors.textContent = num(visTotal);
+        els.kpiViews.textContent = num(pvTotal);
+        els.kpiEvents.textContent = num(evTotal);
+
+        const pvArr = data.series?.pageviews || [];
+        const sesMap = new Map((data.series?.sessions || []).map((s) => [s.x, s.y]));
+        const points = pvArr.map((p) => ({
+          label: formatBucketLabel(p.x, activeRange),
+          pv: p.y || 0,
+          vis: sesMap.get(p.x) || 0,
+        }));
+        drawChart(points);
+
+        renderBars(els.listEvents, data.events, EVENT_LABELS);
+        renderBars(els.listDevices, data.devices, { desktop: 'คอมพิวเตอร์', tablet: 'iPad / แท็บเล็ต', mobile: 'มือถือ' });
+        renderBars(els.listOs, data.os);
+      }
+
+      function enterDashboard() {
+        els.gateView.style.display = 'none';
+        els.dashboardView.classList.add('visible');
+        els.btnRefresh.style.display = 'inline-flex';
+        els.btnLogout.style.display = 'inline-flex';
+        loadStats();
+      }
+
+      els.btnConnect.addEventListener('click', async () => {
+        const key = els.apiKeyInput.value.trim();
+        if (!key) { showErr('กรุณากรอก Umami API Key ก่อน'); return; }
+        showErr('');
+        apiKey = key;
+        isDemo = false;
+        els.btnConnect.textContent = 'กำลังตรวจสอบ...';
+        try {
+          await umamiFetch('/active');
+          localStorage.setItem(KEY_STORAGE, apiKey);
+          enterDashboard();
+        } catch {
+          showErr('API Key ไม่ถูกต้อง หรือยังไม่มีสิทธิ์เข้าถึงเว็บไซต์นี้');
+        } finally {
+          els.btnConnect.textContent = 'เชื่อมต่อข้อมูลจริง';
+        }
+      });
+
+      els.btnDemo.addEventListener('click', () => {
+        isDemo = true;
+        enterDashboard();
+      });
+
+      els.btnRefresh.addEventListener('click', loadStats);
+
+      els.btnLogout.addEventListener('click', () => {
+        localStorage.removeItem(KEY_STORAGE);
+        apiKey = '';
+        isDemo = false;
+        els.apiKeyInput.value = '';
+        els.dashboardView.classList.remove('visible');
+        els.gateView.style.display = 'grid';
+        els.btnRefresh.style.display = 'none';
+        els.btnLogout.style.display = 'none';
+      });
+
+      els.rangeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          activeRange = btn.dataset.range;
+          els.rangeBtns.forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+          loadStats();
+        });
+      });
+
+      if (apiKey) enterDashboard();
+    })();
+  </script>
+</body>
+</html>
