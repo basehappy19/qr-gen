@@ -2363,13 +2363,14 @@
       });
 
       // Download & Copy helpers
-      function slugify(s) {
-        return String(s).toLowerCase().replace(/[^a-z0-9ก-๙]+/g, '-').replace(/^-|-$/g, '').slice(0, 32) || 'qr';
+      function formatTimestamp(d = new Date()) {
+        const p = (n) => String(n).padStart(2, '0');
+        return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
       }
 
-      function downloadCanvas(canvas, label) {
+      function downloadCanvas(canvas) {
         const a = document.createElement('a');
-        a.download = 'qr-' + slugify(label) + '.png';
+        a.download = 'PortQR_' + formatTimestamp() + '.png';
         a.href = canvas.toDataURL('image/png');
         a.click();
         showToast('ดาวน์โหลดรูป PNG แล้ว');
