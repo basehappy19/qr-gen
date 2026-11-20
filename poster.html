@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, initial-scale=1.0" />
+  <title>PortQR — Poster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --font-sans: "Anuphan", "Leelawadee UI", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --ink: #18181b;
+      --muted: #52525b;
+      --accent: #be123c;
+      --accent-bright: #e11d48;
+      --accent-soft: rgba(225, 29, 72, 0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background: #f6f6f9;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Poster Canvas (4:5 Social Portrait) */
+    .poster {
+      position: relative;
+      width: 1080px;
+      height: 1350px;
+      padding: 52px 58px 42px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(251, 113, 133, 0.34), transparent 44%),
+        radial-gradient(circle at 88% 12%, rgba(165, 180, 252, 0.34), transparent 46%),
+        radial-gradient(circle at 82% 76%, rgba(251, 113, 133, 0.22), transparent 44%),
+        radial-gradient(circle at 18% 88%, rgba(253, 230, 138, 0.38), transparent 46%),
+        linear-gradient(180deg, #fafafc 0%, #f3f2f7 100%);
+    }
+
+    /* Subtle dot grid texture */
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(24, 24, 27, 0.055) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    /* Liquid Glass Surfaces */
+    .glass {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.80), rgba(255, 255, 255, 0.50));
+      -webkit-backdrop-filter: blur(22px) saturate(185%);
+      backdrop-filter: blur(22px) saturate(185%);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      box-shadow:
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+        0 18px 44px -18px rgba(24, 24, 27, 0.2);
+    }
+
+    .glass-strong {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.90), rgba(255, 255, 255, 0.68));
+      -webkit-backdrop-filter: blur(26px) saturate(190%);
+      backdrop-filter: blur(26px) saturate(190%);
+      border: 1.5px solid rgba(255, 255, 255, 0.92);
+      box-shadow:
+        inset 0 2px 0 rgba(255, 255, 255, 1),
+        0 24px 56px -20px rgba(24, 24, 27, 0.25);
+    }
+
+    /* ---------- Header ---------- */
+    .header {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-icon-wrap {
+      width: 82px;
+      height: 82px;
+      border-radius: 22px;
+      padding: 4px;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 18px 38px -10px rgba(190, 18, 60, 0.48), 0 0 0 1px rgba(255,255,255,0.9);
+      margin-bottom: 18px;
+    }
+
+    .app-icon-wrap img {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      display: block;
+    }
+
+    .title {
+      font-size: 76px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .title span {
+      background: linear-gradient(135deg, #fb7185 0%, #e11d48 55%, #9f1239 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .headline {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .subline {
+      font-size: 21px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .subline strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ---------- Multi-Device Showcase ---------- */
+    .devices-stage {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 498px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 6px 0 0;
+    }
+
+    /* Soft glow behind devices */
+    .stage-glow {
+      position: absolute;
+      width: 740px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(225, 29, 72, 0.16), rgba(99, 102, 241, 0.12) 55%, transparent 75%);
+      filter: blur(36px);
+      z-index: 0;
+    }
+
+    /* Desktop Monitor */
+    .desktop-wrap {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .desktop-bezel {
+      width: 610px;
+      height: 382px;
+      border-radius: 26px;
+      background: linear-gradient(160deg, #27272a, #111113);
+      padding: 13px;
+      box-shadow:
+        0 34px 70px -22px rgba(24, 24, 27, 0.42),
+        0 0 0 1.5px rgba(255, 255, 255, 0.25) inset;
+    }
+
+    .desktop-stand {
+      width: 134px;
+      height: 46px;
+      background: linear-gradient(180deg, #d4d4d8 0%, #f4f4f5 55%, #d4d4d8 100%);
+      clip-path: polygon(16% 0%, 84% 0%, 96% 100%, 4% 100%);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .desktop-foot {
+      width: 190px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #d4d4d8, #ffffff, #d4d4d8);
+      box-shadow: 0 6px 14px rgba(24, 24, 27, 0.2);
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 14%, rgba(251, 113, 133, 0.28), transparent 45%),
+        radial-gradient(circle at 88% 16%, rgba(165, 180, 252, 0.28), transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(253, 230, 138, 0.28), transparent 48%),
+        #f6f6f9;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 12px 16px;
+      gap: 10px;
+    }
+
+    /* Mini Navbar inside screen */
+    .mini-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 12px -6px rgba(24, 24, 27, 0.16);
+    }
+
+    .mini-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .mini-brand-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
+      background: linear-gradient(135deg, #fb7185, #be123c);
+    }
+
+    .mini-ig {
+      font-size: 9px;
+      font-weight: 600;
+      background: #18181b;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    .mini-hero {
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .mini-hero h4 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .mini-hero h4 span { color: var(--accent); }
+
+    .mini-hero p {
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.85fr;
+      gap: 10px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .mini-card {
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      box-shadow: 0 8px 20px -10px rgba(24, 24, 27, 0.15);
+    }
+
+    .mini-seg {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: rgba(24, 24, 27, 0.06);
+      border-radius: 8px;
+      padding: 2px;
+      font-size: 8.5px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .mini-seg .on {
+      background: #fff;
+      color: var(--ink);
+      border-radius: 6px;
+      padding: 3px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .mini-seg span { padding: 3px 0; }
+
+    .mini-input {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(24, 24, 27, 0.12);
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 9px;
+      color: var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mini-paste {
+      font-size: 8px;
+      font-weight: 700;
+      background: #f4f4f5;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+
+    .mini-swatches {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .mini-sw {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .mini-sw.active {
+      box-shadow: 0 0 0 1.5px #fff, 0 0 0 3px var(--accent);
+    }
+
+    .mini-label {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .mini-qr-box {
+      background: #fff;
+      border-radius: 11px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px -6px rgba(0,0,0,0.16);
+      aspect-ratio: 1 / 1;
+      width: 116px;
+      margin: 0 auto;
+    }
+
+    .mini-btn-dark {
+      background: #18181b;
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .mini-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    .mini-btn-light {
+      background: #fff;
+      border: 1px solid rgba(24,24,27,0.12);
+      border-radius: 7px;
+      padding: 5px;
+      font-size: 8px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .mini-btn-rose {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 7px;
+      padding: 5px;
+      font-size: 8px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* iPad Portrait Mockup (Left Front) */
+    .ipad-wrap {
+      position: absolute;
+      left: 16px;
+      bottom: 24px;
+      z-index: 3;
+      transform: rotate(-4deg);
+    }
+
+    .ipad-bezel {
+      width: 274px;
+      height: 360px;
+      border-radius: 26px;
+      background: linear-gradient(155deg, #27272a, #111113);
+      padding: 11px;
+      box-shadow:
+        0 30px 60px -18px rgba(24, 24, 27, 0.45),
+        0 0 0 1.5px rgba(255, 255, 255, 0.28) inset;
+    }
+
+    .ipad-bezel .screen {
+      border-radius: 17px;
+      padding: 10px;
+      gap: 8px;
+    }
+
+    /* iPhone Mockup (Right Front) */
+    .iphone-wrap {
+      position: absolute;
+      right: 26px;
+      bottom: 22px;
+      z-index: 3;
+      transform: rotate(4.5deg);
+    }
+
+    .iphone-bezel {
+      width: 196px;
+      height: 386px;
+      border-radius: 34px;
+      background: linear-gradient(155deg, #27272a, #09090b);
+      padding: 9px;
+      box-shadow:
+        0 30px 60px -18px rgba(24, 24, 27, 0.48),
+        0 0 0 1.5px rgba(255, 255, 255, 0.3) inset;
+    }
+
+    .iphone-bezel .screen {
+      border-radius: 26px;
+      padding: 12px 10px 10px;
+      gap: 7px;
+    }
+
+    .dynamic-island {
+      width: 56px;
+      height: 15px;
+      border-radius: 999px;
+      background: #09090b;
+      margin: 0 auto 2px;
+    }
+
+    /* Device Platform Pill */
+    .platform-pill {
+      position: relative;
+      z-index: 4;
+      margin-top: -12px;
+      padding: 9px 24px;
+      border-radius: 999px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+
+    /* ---------- 4 Highlight Stat Cards ---------- */
+    .stats-grid {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .stat-card {
+      border-radius: 24px;
+      padding: 20px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+
+    .stat-val {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+
+    .stat-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    /* ---------- Bottom CTA Card ---------- */
+    .cta-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      border-radius: 32px;
+      padding: 26px 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-top: 14px;
+    }
+
+    .cta-qr-frame {
+      width: 196px;
+      height: 196px;
+      border-radius: 24px;
+      background: #ffffff;
+      padding: 14px;
+      flex-shrink: 0;
+      box-shadow: 0 14px 32px -12px rgba(24, 24, 27, 0.22), 0 0 0 1px rgba(24,24,27,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-qr-frame svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .cta-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .cta-title {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+
+    .cta-title span {
+      color: var(--accent);
+    }
+
+    .cta-url {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      margin-top: 2px;
+    }
+
+    .cta-meta {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--muted);
+      line-height: 1.45;
+      margin-top: 4px;
+    }
+
+    .cta-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cta-tag {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 5px 13px;
+      border-radius: 999px;
+      background: rgba(24, 24, 27, 0.06);
+      color: var(--ink);
+    }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .footer-ig {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="poster">
+    <!-- Top Header -->
+    <header class="header">
+      <div class="app-icon-wrap">
+        <img src="./favicon.svg" alt="PortQR" />
+      </div>
+      <h1 class="title">Port<span>QR</span></h1>
+      <p class="headline">สร้าง QR Code ใส่พอร์ต ง่ายใน 3 วินาที</p>
+      <p class="subline">วางลิงก์ผลงานแล้วแต่งสี ใส่โลโก้ได้ทันที • <strong>ฟรี ไม่มีโฆษณา</strong></p>
+    </header>
+
+    <!-- Multi-Device Showcase -->
+    <section class="devices-stage" aria-label="ตัวอย่างหน้าจอหลายอุปกรณ์">
+      <div class="stage-glow"></div>
+
+      <!-- Desktop Monitor (Center Back) -->
+      <div class="desktop-wrap">
+        <div class="desktop-bezel">
+          <div class="screen">
+            <div class="mini-nav">
+              <div class="mini-brand">
+                <div class="mini-brand-dot"></div>
+                <span>Port<strong style="color:#be123c">QR</strong></span>
+              </div>
+              <span class="mini-ig">IG: base_happy19</span>
+            </div>
+            <div class="mini-hero">
+              <h4>สร้าง <span>QR Code</span> ง่ายใน 3 วินาที</h4>
+              <p>วางลิงก์ผลงาน Google Drive, YouTube, Canva แล้วแปะลงพอร์ตได้เลย</p>
+            </div>
+            <div class="mini-grid">
+              <div class="mini-card">
+                <div class="mini-seg">
+                  <span class="on">ลิงก์ / ข้อความ</span>
+                  <span>Instagram</span>
+                  <span>Wi-Fi</span>
+                </div>
+                <div class="mini-input">
+                  <span>https://drive.google.com/portfolio</span>
+                  <span class="mini-paste">วาง</span>
+                </div>
+                <div class="mini-label">ตั้งชื่อจำง่าย</div>
+                <div class="mini-input">
+                  <span>ผลงานแข่งขันหุ่นยนต์ ระดับชาติ</span>
+                </div>
+                <div class="mini-label">เลือกสี QR Code</div>
+                <div class="mini-swatches">
+                  <span class="mini-sw" style="background:#18181b"></span>
+                  <span class="mini-sw active" style="background:#be123c"></span>
+                  <span class="mini-sw" style="background:#1d4ed8"></span>
+                  <span class="mini-sw" style="background:#6d28d9"></span>
+                  <span class="mini-sw" style="background:#047857"></span>
+                  <span class="mini-sw" style="background:#78350f"></span>
+                </div>
+              </div>
+              <div class="mini-card" style="justify-content:space-between;background:rgba(255,255,255,0.9);">
+                <div class="mini-label" style="text-align:center;">ตัวอย่าง QR Code</div>
+                <div class="mini-qr-box" id="qr-desktop"></div>
+                <div style="display:grid;gap:5px;">
+                  <div class="mini-btn-dark">ดาวน์โหลด PNG</div>
+                  <div class="mini-btn-row">
+                    <div class="mini-btn-light">คัดลอกรูป</div>
+                    <div class="mini-btn-rose">เก็บในรายการ</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="desktop-stand"></div>
+        <div class="desktop-foot"></div>
+      </div>
+
+      <!-- iPad Portrait (Front Left) -->
+      <div class="ipad-wrap">
+        <div class="ipad-bezel">
+          <div class="screen">
+            <div class="mini-nav" style="padding:4px 8px;">
+              <div class="mini-brand" style="font-size:9px;">
+                <div class="mini-brand-dot" style="width:13px;height:13px;"></div>
+                <span>Port<strong style="color:#be123c">QR</strong></span>
+              </div>
+              <span class="mini-ig" style="font-size:7.5px;">base_happy19</span>
+            </div>
+            <div class="mini-hero">
+              <h4 style="font-size:12px;">สร้าง <span>QR Code</span> ง่ายใน 3 วิ</h4>
+            </div>
+            <div class="mini-grid" style="grid-template-columns:1.05fr 0.95fr;gap:7px;">
+              <div class="mini-card" style="padding:7px;gap:5px;">
+                <div class="mini-seg" style="font-size:7px;">
+                  <span class="on">ลิงก์</span>
+                  <span>IG</span>
+                  <span>Wi-Fi</span>
+                </div>
+                <div class="mini-input" style="font-size:7px;padding:5px;">
+                  <span>canva.com/port</span>
+                </div>
+                <div class="mini-label" style="font-size:7px;">สี QR</div>
+                <div class="mini-swatches" style="gap:4px;">
+                  <span class="mini-sw active" style="width:13px;height:13px;background:#18181b"></span>
+                  <span class="mini-sw" style="width:13px;height:13px;background:#be123c"></span>
+                  <span class="mini-sw" style="width:13px;height:13px;background:#1d4ed8"></span>
+                  <span class="mini-sw" style="width:13px;height:13px;background:#047857"></span>
+                </div>
+                <div class="mini-input" style="font-size:7px;padding:5px;border-style:dashed;justify-content:center;">
+                  + ใส่โลโก้ตรงกลาง
+                </div>
+              </div>
+              <div class="mini-card" style="padding:7px;justify-content:space-between;background:rgba(255,255,255,0.92);">
+                <div class="mini-qr-box" id="qr-ipad" style="width:88px;padding:6px;"></div>
+                <div style="display:grid;gap:4px;">
+                  <div class="mini-btn-dark" style="font-size:7.5px;padding:5px;">ดาวน์โหลด PNG</div>
+                  <div class="mini-btn-light" style="font-size:7.5px;padding:4px;">คัดลอกรูป</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- iPhone (Front Right) -->
+      <div class="iphone-wrap">
+        <div class="iphone-bezel">
+          <div class="screen">
+            <div class="dynamic-island"></div>
+            <div class="mini-nav" style="padding:4px 8px;">
+              <div class="mini-brand" style="font-size:8.5px;">
+                <div class="mini-brand-dot" style="width:12px;height:12px;"></div>
+                <span>Port<strong style="color:#be123c">QR</strong></span>
+              </div>
+              <span class="mini-ig" style="font-size:7px;padding:2px 6px;">IG</span>
+            </div>
+            <div class="mini-card" style="padding:8px;gap:6px;">
+              <div class="mini-seg" style="font-size:7px;">
+                <span>ลิงก์</span>
+                <span class="on">IG</span>
+                <span>Wi-Fi</span>
+              </div>
+              <div class="mini-input" style="font-size:8px;padding:5px 7px;">
+                <span><strong style="color:#be123c">@</strong> base_happy19</span>
+              </div>
+            </div>
+            <div class="mini-card" style="padding:9px;gap:7px;flex:1;justify-content:space-between;background:rgba(255,255,255,0.92);">
+              <div class="mini-qr-box" id="qr-iphone" style="width:116px;padding:7px;"></div>
+              <div style="display:grid;gap:5px;">
+                <div class="mini-btn-dark" style="font-size:8.5px;padding:6px;">ดาวน์โหลด PNG</div>
+                <div class="mini-btn-row">
+                  <div class="mini-btn-light" style="font-size:7.5px;">คัดลอกรูป</div>
+                  <div class="mini-btn-rose" style="font-size:7.5px;">เก็บไว้</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA Card -->
+    <section class="cta-card glass-strong" aria-label="สแกนใช้งานฟรี">
+      <div class="cta-qr-frame" id="qr-main"></div>
+      <div class="cta-text">
+        <div class="cta-title">สแกน <span>ใช้งานฟรี</span></div>
+        <div class="cta-url" id="cta-url-text">qr.basehappy19.site</div>
+        <div class="cta-meta">ใช้งานบนเบราว์เซอร์ ไม่ต้องติดตั้ง ไม่ต้องสมัครสมาชิก<br>โหลด PNG คมชัด หรือคัดลอกวางลงพอร์ตได้ทันที</div>
+        <div class="cta-tags">
+          <span class="cta-tag">ฟรี ไม่มีโฆษณา</span>
+          <span class="cta-tag">ไม่เก็บข้อมูล</span>
+          <span class="cta-tag">QR ไม่มีวันหมดอายุ</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>ออกแบบและพัฒนาโดย</span>
+      <span class="footer-ig">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        IG: base_happy19
+      </span>
+    </footer>
+  </div>
+
+  <!-- Minimal Self-Contained QR Code Encoder (Byte Mode, ECC-M, Versions 1-4) so Poster works 100% Offline -->
+  <script>
+    (() => {
+      const params = new URLSearchParams(location.search);
+      const targetUrl = params.get('url') || 'https://qr.basehappy19.site';
+      document.getElementById('cta-url-text').textContent = targetUrl.replace(/^https?:\/\//, '');
+
+      // Compact GF(256) QR encoder (Versions 1-4, ECC-M, Mask 0)
+      const EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+      let x = 1;
+      for (let i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x = (x << 1) ^ (x & 128 ? 0x11d : 0); }
+      for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+
+      function rsPoly(ecLen) {
+        let p = [1];
+        for (let i = 0; i < ecLen; i++) {
+          const next = new Array(p.length + 1).fill(0);
+          for (let j = 0; j < p.length; j++) {
+            next[j] ^= p[j];
+            next[j + 1] ^= p[j] ? EXP[LOG[p[j]] + i] : 0;
+          }
+          p = next;
+        }
+        return p;
+      }
+
+      function rsEncode(data, ecLen) {
+        const gen = rsPoly(ecLen);
+        const rem = new Uint8Array(data.length + ecLen);
+        rem.set(data);
+        for (let i = 0; i < data.length; i++) {
+          const coef = rem[i];
+          if (coef) {
+            const lc = LOG[coef];
+            for (let j = 0; j < gen.length; j++) {
+              if (gen[j]) rem[i + j] ^= EXP[LOG[gen[j]] + lc];
+            }
+          }
+        }
+        return rem.slice(data.length);
+      }
+
+      // Version specs for ECC-M: [ver, size, dataCodewords, ecPerBlock, blocks, alignPos]
+      const SPECS = [
+        [1, 21, 16, 10, 1, []],
+        [2, 25, 28, 16, 1, [6, 18]],
+        [3, 29, 44, 26, 1, [6, 22]],
+        [4, 33, 64, 18, 2, [6, 26]],
+      ];
+
+      function makeQRMatrix(text) {
+        const bytes = Array.from(new TextEncoder().encode(text));
+        const spec = SPECS.find((s) => bytes.length + 2 <= s[2]) || SPECS[3];
+        const [, size, dataCW, ecCW, blocks, align] = spec;
+
+        // Bitstream: Mode 0100 (Byte), 8-bit length, data, terminator, pad
+        const bits = [];
+        const push = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+        push(0b0100, 4);
+        push(bytes.length, 8);
+        bytes.forEach((b) => push(b, 8));
+        for (let i = 0; i < 4 && bits.length < dataCW * 8; i++) bits.push(0);
+        while (bits.length % 8) bits.push(0);
+        const cw = [];
+        for (let i = 0; i < bits.length; i += 8) {
+          let b = 0;
+          for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
+          cw.push(b);
+        }
+        let padToggle = 0;
+        while (cw.length < dataCW) cw.push(padToggle++ % 2 === 0 ? 0xec : 0x11);
+
+        // Interleave blocks
+        const blkLen = dataCW / blocks;
+        const dataBlocks = [], ecBlocks = [];
+        for (let b = 0; b < blocks; b++) {
+          const slice = cw.slice(b * blkLen, (b + 1) * blkLen);
+          dataBlocks.push(slice);
+          ecBlocks.push(Array.from(rsEncode(slice, ecCW)));
+        }
+        const finalCW = [];
+        for (let i = 0; i < blkLen; i++) for (let b = 0; b < blocks; b++) finalCW.push(dataBlocks[b][i]);
+        for (let i = 0; i < ecCW; i++) for (let b = 0; b < blocks; b++) finalCW.push(ecBlocks[b][i]);
+
+        const mod = Array.from({ length: size }, () => new Int8Array(size).fill(-1));
+        const set = (r, c, v) => { if (r >= 0 && r < size && c >= 0 && c < size) mod[r][c] = v ? 1 : 0; };
+
+        const placeFinder = (r0, c0) => {
+          for (let dr = -1; dr <= 7; dr++) {
+            for (let dc = -1; dc <= 7; dc++) {
+              const inB = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
+              const border = dr === 0 || dr === 6 || dc === 0 || dc === 6;
+              const core = dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4;
+              set(r0 + dr, c0 + dc, inB && (border || core));
+            }
+          }
+        };
+        placeFinder(0, 0);
+        placeFinder(0, size - 7);
+        placeFinder(size - 7, 0);
+
+        // Alignment
+        for (const r of align) {
+          for (const c of align) {
+            if (mod[r][c] !== -1) continue;
+            for (let dr = -2; dr <= 2; dr++) {
+              for (let dc = -2; dc <= 2; dc++) {
+                set(r + dr, c + dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1);
+              }
+            }
+          }
+        }
+
+        // Timing
+        for (let i = 8; i < size - 8; i++) {
+          if (mod[6][i] === -1) mod[6][i] = i % 2 === 0 ? 1 : 0;
+          if (mod[i][6] === -1) mod[i][6] = i % 2 === 0 ? 1 : 0;
+        }
+        // Dark module
+        mod[size - 8][8] = 1;
+
+        // Reserve format info (ECC-M = 00, Mask 0 = 000 -> 101010000010010)
+        const fmt = 0b101010000010010;
+        const fmtBit = (i) => (fmt >> (14 - i)) & 1;
+        const fCoords1 = [[8,0],[8,1],[8,2],[8,3],[8,4],[8,5],[8,7],[8,8],[7,8],[5,8],[4,8],[3,8],[2,8],[1,8],[0,8]];
+        const fCoords2 = [[size-1,8],[size-2,8],[size-3,8],[size-4,8],[size-5,8],[size-6,8],[size-7,8],[8,size-8],[8,size-7],[8,size-6],[8,size-5],[8,size-4],[8,size-3],[8,size-2],[8,size-1]];
+        for (let i = 0; i < 15; i++) {
+          mod[fCoords1[i][0]][fCoords1[i][1]] = fmtBit(i);
+          mod[fCoords2[i][0]][fCoords2[i][1]] = fmtBit(i);
+        }
+
+        // Place data bits with Mask 0 ((r + c) % 2 === 0)
+        let bitIdx = 0;
+        const totalBits = finalCW.length * 8;
+        let up = true;
+        for (let col = size - 1; col >= 1; col -= 2) {
+          if (col === 6) col--;
+          for (let step = 0; step < size; step++) {
+            const row = up ? size - 1 - step : step;
+            for (let dc = 0; dc < 2; dc++) {
+              const c = col - dc;
+              if (mod[row][c] === -1) {
+                let bit = 0;
+                if (bitIdx < totalBits) {
+                  bit = (finalCW[bitIdx >> 3] >> (7 - (bitIdx & 7))) & 1;
+                  bitIdx++;
+                }
+                if ((row + c) % 2 === 0) bit ^= 1;
+                mod[row][c] = bit;
+              }
+            }
+          }
+          up = !up;
+        }
+        return mod;
+      }
+
+      function renderQRSvg(containerId, text, dark = '#18181b') {
+        const mat = makeQRMatrix(text);
+        const n = mat.length;
+        let paths = '';
+        for (let r = 0; r < n; r++) {
+          for (let c = 0; c < n; c++) {
+            if (mat[r][c] === 1) {
+              paths += `<rect x="${c}" y="${r}" width="1.02" height="1.02" rx="0.16" fill="${dark}"/>`;
+            }
+          }
+        }
+        document.getElementById(containerId).innerHTML =
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 ${n + 2} ${n + 2}" shape-rendering="geometricPrecision">${paths}</svg>`;
+      }
+
+      renderQRSvg('qr-main', targetUrl, '#18181b');
+      renderQRSvg('qr-desktop', targetUrl, '#be123c');
+      renderQRSvg('qr-ipad', targetUrl, '#18181b');
+      renderQRSvg('qr-iphone', 'https://www.instagram.com/base_happy19/', '#1d4ed8');
+    })();
+  </script>
+</body>
+</html>

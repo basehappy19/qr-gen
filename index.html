@@ -3,488 +3,2585 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Gen Studio</title>
-  <meta name="description" content="สร้าง QR Code จากลิงก์ได้ง่าย ปรับสีและใส่โลโก้ได้" />
+  <title>PortQR — สร้าง QR Code ใส่พอร์ต ฟรี ง่ายใน 3 วินาที</title>
+  <meta name="description" content="PortQR เว็บสร้าง QR Code ฟรีสำหรับนักเรียน ทำ QR Code ผลงานเพิ่มเติมใส่พอร์ต แปลงลิงก์ Google Drive, YouTube, Canva หรือ Instagram แต่งสี ใส่โลโก้ โหลด PNG คมชัดทันที" />
+  <meta name="keywords" content="PortQR, สร้าง QR Code, ทำ QR Code ใส่พอร์ต, QR Code ผลงานเพิ่มเติม, สร้างคิวอาร์โค้ดฟรี, QR Code นักเรียน, ทำ QR Code ใส่โลโก้" />
+  <meta name="author" content="IG: base_happy19" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#f8f8fa" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="PortQR" />
+
+  <!-- Favicons & PWA Manifest -->
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="./favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" sizes="180x180" />
+  <link rel="manifest" href="./site.webmanifest" />
+
+  <!-- Canonical & Open Graph / Social Share -->
+  <link rel="canonical" href="https://qr.basehappy19.site/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://qr.basehappy19.site/" />
+  <meta property="og:locale" content="th_TH" />
+  <meta property="og:site_name" content="PortQR" />
+  <meta property="og:title" content="PortQR — สร้าง QR Code ใส่พอร์ต ฟรี ง่ายใน 3 วินาที" />
+  <meta property="og:description" content="ทำ QR Code ผลงานเพิ่มเติมใส่พอร์ตหรือใส่ในงานได้ง่าย ๆ ฟรี ไม่มีโฆษณา ไม่เก็บข้อมูล ไม่มีวันหมดอายุ แต่งสี ใส่โลโก้ โหลด PNG คมชัดทันที" />
+  <meta property="og:image" content="https://qr.basehappy19.site/og-image.png" />
+  <meta property="og:image:secure_url" content="https://qr.basehappy19.site/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="PortQR — สร้าง QR Code ใส่พอร์ต ง่ายใน 3 วินาที" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PortQR — สร้าง QR Code ใส่พอร์ต ฟรี ง่ายใน 3 วินาที" />
+  <meta name="twitter:description" content="ฟรี ไม่มีโฆษณา ไม่เก็บข้อมูล ไม่มีวันหมดอายุ แต่งสี ใส่โลโก้ โหลด PNG คมชัดทันที" />
+  <meta name="twitter:image" content="https://qr.basehappy19.site/og-image.png" />
+  <meta name="twitter:image:alt" content="PortQR — สร้าง QR Code ใส่พอร์ต ง่ายใน 3 วินาที" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PortQR",
+      "description": "เว็บสร้าง QR Code ฟรีสำหรับนักเรียน ทำ QR Code ผลงานเพิ่มเติมใส่พอร์ต แปลงลิงก์ Google Drive, YouTube, Canva หรือ Instagram แต่งสี ใส่โลโก้ โหลด PNG คมชัดทันที",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "inLanguage": "th",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "THB"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "base_happy19",
+        "sameAs": [
+          "https://www.instagram.com/base_happy19/"
+        ]
+      }
+    }
+  </script>
+
+  <!-- Performance: Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #f5f5f5;
-      --surface: #ffffff;
-      --border: #e4e4e4;
-      --border-focus: #999;
-      --text: #1a1a1a;
-      --muted: #777;
-      --danger: #d32f2f;
-      --radius: 12px;
-      --trans: 0.15s ease;
+      --font-sans: "Anuphan", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+      --bg: #f6f6f9;
+      --ink: #18181b;
+      --muted: #52525b;
+      --subtle: #71717a;
+      --accent: #be123c;
+      --accent-bright: #e11d48;
+      --accent-strong: #881337;
+      --accent-soft: rgba(225, 29, 72, 0.1);
+      --danger: #b91c1c;
+      --ok: #047857;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-pill: 999px;
     }
-    html { scroll-behavior: smooth; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--font-sans);
+      color: var(--ink);
       background: var(--bg);
-      color: var(--text);
       min-height: 100vh;
-      font-size: 15px;
-      line-height: 1.5;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: clip;
+      position: relative;
     }
-    .page { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
-    header { padding: 40px 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand-icon { width: 36px; height: 36px; background: var(--text); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .brand-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; }
-    .brand-sub { font-size: 12px; color: var(--muted); }
-    .count-pill { font-size: 13px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; }
-    .count-pill strong { color: var(--text); }
-    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
-    .panel-title { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 16px; }
-    .field { margin-bottom: 14px; }
-    label { display: block; font-size: 13px; font-weight: 500; color: var(--muted); margin-bottom: 5px; }
-    input[type="text"], input[type="url"], select {
-      width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-      padding: 10px 14px; color: var(--text); font-family: inherit; font-size: 14px;
-      outline: none; transition: border-color var(--trans), background var(--trans);
-      -webkit-appearance: none; appearance: none;
+
+    ::selection {
+      background: var(--accent);
+      color: #ffffff;
     }
-    input[type="text"]:focus, input[type="url"]:focus, select:focus { border-color: var(--border-focus); background: #fff; }
-    input::placeholder { color: #bbb; }
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; cursor: pointer;
+
+    :focus-visible {
+      outline: 2.5px solid var(--accent);
+      outline-offset: 3px;
     }
-    select option { background: #fff; color: #1a1a1a; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    @media (max-width: 640px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 400px) { .grid-4 { grid-template-columns: 1fr; } }
-    .color-row { display: flex; align-items: center; gap: 7px; }
-    input[type="color"] { width: 38px; height: 38px; padding: 2px; border: 1px solid var(--border); border-radius: 8px; background: none; cursor: pointer; flex-shrink: 0; outline: none; }
-    .color-hex { flex: 1; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 18px; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 500; border: 1px solid transparent; cursor: pointer; transition: all var(--trans); white-space: nowrap; }
-    .btn-primary { background: var(--text); color: #fff; border-color: var(--text); }
-    .btn-primary:hover { background: #333; border-color: #333; }
-    .btn-ghost { background: var(--bg); color: var(--text); border-color: var(--border); }
-    .btn-ghost:hover { border-color: var(--border-focus); background: #fff; }
-    .btn-danger { background: transparent; color: var(--danger); border-color: #f5c6c6; }
-    .btn-danger:hover { background: #fff0f0; }
-    .btn-sm { padding: 7px 13px; font-size: 13px; }
-    .btn-icon { padding: 7px; width: 34px; height: 34px; border-radius: 8px; }
-    .add-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: flex-end; }
-    @media (max-width: 480px) { .add-row { grid-template-columns: 1fr; } }
-    .logo-upload { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .logo-file-btn { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 8px; font-family: inherit; font-size: 13px; font-weight: 500; background: var(--bg); color: var(--text); border: 1px solid var(--border); cursor: pointer; transition: all var(--trans); }
-    .logo-file-btn:hover { border-color: var(--border-focus); background: #fff; }
-    .logo-file-btn input { display: none; }
-    #logo-preview { width: 34px; height: 34px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border); display: none; }
-    .divider { height: 1px; background: var(--border); margin: 20px 0; }
-    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
-    .toolbar-left { font-size: 14px; color: var(--muted); }
-    .toolbar-left strong { color: var(--text); }
-    .toolbar-right { display: flex; gap: 8px; flex-wrap: wrap; }
-    #cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-    .qr-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; animation: fadeUp .25s ease both; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .card-top { display: flex; align-items: center; padding: 11px 14px; border-bottom: 1px solid var(--border); gap: 8px; }
-    .card-num { font-size: 11px; font-weight: 600; color: #bbb; letter-spacing: 0.04em; flex-shrink: 0; }
-    .card-title { font-size: 13px; font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-    .card-actions { display: flex; gap: 5px; flex-shrink: 0; }
-    .qr-area { display: flex; align-items: center; justify-content: center; padding: 20px; background: #fafafa; }
-    .qr-area canvas, .qr-area img { border-radius: 6px; display: block; max-width: 100%; }
-    .card-footer { padding: 10px 14px 12px; }
-    .card-url { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 6px; }
-    .card-url a { color: #555; text-decoration: none; }
-    .card-url a:hover { text-decoration: underline; }
-    .card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-    .tag { font-size: 11px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px; }
-    .color-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; border: 1px solid rgba(0,0,0,0.1); }
-    #empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; display: none; }
-    #empty-state.visible { display: block; }
-    .empty-icon { font-size: 44px; margin-bottom: 12px; opacity: .3; }
-    #empty-state p { color: var(--muted); font-size: 14px; line-height: 1.7; }
-    .modal-overlay { position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 20px; }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; width: min(420px, 100%); transform: translateY(12px); transition: transform .2s; }
-    .modal-overlay.open .modal { transform: translateY(0); }
-    .modal h3 { font-size: .95rem; font-weight: 600; margin-bottom: 6px; }
-    .modal p { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
-    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
-    #toast { position: fixed; bottom: 22px; right: 22px; z-index: 9999; background: var(--text); color: #fff; border-radius: 9px; padding: 9px 16px; font-size: 13px; display: flex; align-items: center; gap: 8px; transform: translateY(56px); opacity: 0; transition: all .22s ease; }
-    #toast.show { transform: translateY(0); opacity: 1; }
-    @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
-    .shake { animation: shake .3s ease; }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+
+    /* ---------- Ambient Background Blobs (iOS Liquid Glass Canvas) ---------- */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(251, 113, 133, 0.22), transparent 42%),
+        radial-gradient(circle at 88% 14%, rgba(165, 180, 252, 0.24), transparent 44%),
+        radial-gradient(circle at 52% 92%, rgba(253, 230, 138, 0.26), transparent 46%),
+        var(--bg);
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(72px);
+      opacity: 0.52;
+      will-change: transform;
+      animation: blob-float 20s ease-in-out infinite;
+    }
+
+    .blob-1 { width: 420px; height: 420px; top: -120px; left: -90px; background: #fda4af; }
+    .blob-2 { width: 460px; height: 460px; top: 8%; right: -140px; background: #c7d2fe; animation-delay: -7s; }
+    .blob-3 { width: 380px; height: 380px; bottom: -110px; left: 28%; background: #fde68a; animation-delay: -13s; }
+
+    @keyframes blob-float {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(26px, -18px, 0) scale(1.06); }
+      66% { transform: translate3d(-18px, 22px, 0) scale(0.95); }
+    }
+
+    @media (max-width: 767px) {
+      .blob { animation: none; opacity: 0.35; }
+    }
+
+    /* ---------- Liquid Glass Surfaces (Portfolio DNA) ---------- */
+    .glass {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.46));
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.25),
+        0 12px 40px -14px rgba(24, 24, 27, 0.16);
+    }
+
+    .glass-strong {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.64));
+      -webkit-backdrop-filter: blur(24px) saturate(190%);
+      backdrop-filter: blur(24px) saturate(190%);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        0 20px 52px -18px rgba(24, 24, 27, 0.24);
+    }
+
+    .glass-dark {
+      background: linear-gradient(135deg, rgba(24, 24, 27, 0.88), rgba(24, 24, 27, 0.74));
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.45);
+    }
+
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .glass { background: rgba(255, 255, 255, 0.95); }
+      .glass-strong { background: rgba(255, 255, 255, 0.98); }
+      .glass-dark { background: rgba(24, 24, 27, 0.94); }
+    }
+
+    /* ---------- Skip Link (Accessibility) ---------- */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 12px;
+      z-index: 200;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-link:focus { left: 16px; }
+
+    /* ---------- Floating Liquid Glass Navbar ---------- */
+    .navbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: max(12px, env(safe-area-inset-top)) 16px 8px;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .navbar {
+      pointer-events: auto;
+      width: min(1040px, 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 10px 8px 14px;
+      border-radius: var(--radius-pill);
+      transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      min-height: 44px;
+    }
+
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: block;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px -4px rgba(190, 18, 60, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .brand-title span { color: var(--accent); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(24, 24, 27, 0.08);
+      transition: transform 0.25s var(--ease-spring), background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .nav-pill:hover {
+      background: #ffffff;
+      border-color: rgba(24, 24, 27, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .nav-pill-ig {
+      background: var(--ink);
+      color: #ffffff;
+      border-color: var(--ink);
+      box-shadow: 0 8px 20px -8px rgba(24, 24, 27, 0.55);
+    }
+
+    .nav-pill-ig:hover {
+      background: #27272a;
+      border-color: #27272a;
+      color: #ffffff;
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 540px) {
+      .nav-hide-sm { display: none; }
+      .nav-pill { padding: 0 12px; font-size: 0.8125rem; }
+    }
+
+    /* ---------- Page Layout ---------- */
+    .container {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: 16px 16px 48px;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      text-align: center;
+      padding: 8px 8px 18px;
+      animation: fade-rise 0.7s var(--ease-out-expo) both;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.65rem, 4.2vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .hero h1 .accent-text {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 560px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+
+    /* ---------- Studio Grid ---------- */
+    .studio-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.85fr);
+      gap: 18px;
+      align-items: start;
+      animation: fade-rise 0.8s var(--ease-out-expo) 0.08s both;
+    }
+
+    @media (max-width: 900px) and (min-width: 681px) {
+      .studio-grid {
+        grid-template-columns: minmax(0, 1.12fr) minmax(255px, 0.88fr);
+        gap: 14px;
+      }
+      .card { padding: 18px; }
+      .qr-stage { max-width: 220px; margin: 4px auto 12px; padding: 12px; }
+      .seg-btn { font-size: 0.82rem; gap: 4px; }
+      .preview-sub-actions { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .studio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      padding: 24px;
+    }
+
+    @media (max-width: 520px) {
+      .card { padding: 18px; border-radius: 24px; }
+    }
+
+    .section-eyebrow {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    /* ---------- iOS Segmented Control ---------- */
+    .segmented {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 4px;
+      border-radius: 16px;
+      background: rgba(24, 24, 27, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+    }
+
+    .seg-indicator {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc((100% - 8px) / 3);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 4px 14px -4px rgba(24, 24, 27, 0.18), 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: transform 0.42s var(--ease-spring);
+      pointer-events: none;
+    }
+
+    .seg-btn {
+      position: relative;
+      z-index: 1;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      min-height: 44px;
+      padding: 8px 6px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: color 0.25s ease;
+    }
+
+    .seg-btn[aria-selected="true"] { color: var(--ink); }
+    .seg-btn:hover { color: var(--ink); }
+
+    /* ---------- Inputs ---------- */
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 7px;
+      gap: 8px;
+    }
+
+    .field-hint {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-prefix {
+      position: absolute;
+      left: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      pointer-events: none;
+      font-size: 1rem;
+    }
+
+    .input, .select {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid rgba(24, 24, 27, 0.1);
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.975rem;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .input.has-prefix { padding-left: 34px; }
+    .input.has-action { padding-right: 84px; }
+
+    .input:focus, .select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(190, 18, 60, 0.12);
+    }
+
+    .input::placeholder { color: #71717a; }
+
+    .input-inline-btn {
+      position: absolute;
+      right: 6px;
+      min-height: 36px;
+      padding: 0 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(24, 24, 27, 0.1);
+      background: #ffffff;
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .input-inline-btn:hover { background: #f4f4f5; }
+    .input-inline-btn:active { transform: scale(0.96); }
+
+    .mode-panel { display: none; }
+    .mode-panel.active { display: block; animation: fade-in 0.25s ease; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- Color Presets ---------- */
+    .divider {
+      height: 1px;
+      background: rgba(24, 24, 27, 0.08);
+      margin: 20px 0;
+    }
+
+    .swatches {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 6px;
+    }
+
+    .swatch {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.28);
+      cursor: pointer;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s var(--ease-spring), box-shadow 0.2s ease;
+    }
+
+    .swatch:hover { transform: scale(1.1); }
+    .swatch[aria-pressed="true"] {
+      transform: scale(1.08);
+      box-shadow: 0 0 0 3px #ffffff, 0 0 0 5.5px var(--accent);
+    }
+
+    .swatch-check {
+      color: #ffffff;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .swatch[aria-pressed="true"] .swatch-check { opacity: 1; }
+
+    .swatch-custom {
+      background: conic-gradient(from 0deg, #ef4444, #f59e0b, #eab308, #22c55e, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+      color: #ffffff;
+    }
+
+    .swatch-custom svg {
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+    }
+
+    /* ---------- Custom iOS Liquid Glass Color Picker ---------- */
+    .cp-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      margin-top: 0;
+      pointer-events: none;
+      transition:
+        grid-template-rows 0.45s var(--ease-out-expo),
+        opacity 0.35s var(--ease-out-expo),
+        margin-top 0.45s var(--ease-out-expo);
+    }
+
+    .cp-drawer.open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      margin-top: 12px;
+      pointer-events: auto;
+    }
+
+    .cp-drawer-inner {
+      overflow: hidden;
+      padding: 4px;
+      margin: -4px;
+    }
+
+    .cp-panel {
+      border-radius: 20px;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.64));
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 1px 0 #ffffff, 0 12px 30px -14px rgba(24, 24, 27, 0.22);
+      display: grid;
+      gap: 12px;
+    }
+
+    .cp-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding: 3px;
+      border-radius: 12px;
+      background: rgba(24, 24, 27, 0.06);
+    }
+
+    .cp-tab {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--muted);
+      min-height: 36px;
+      border-radius: 9px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cp-tab[aria-selected="true"] {
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: 0 3px 10px -4px rgba(24, 24, 27, 0.2);
+    }
+
+    .cp-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(24, 24, 27, 0.16);
+      flex-shrink: 0;
+    }
+
+    .cp-sv {
+      position: relative;
+      width: 100%;
+      height: 152px;
+      border-radius: 14px;
+      background-color: #e11d48;
+      background-image:
+        linear-gradient(to top, #000000, transparent),
+        linear-gradient(to right, #ffffff, transparent);
+      cursor: crosshair;
+      touch-action: none;
+      user-select: none;
+      box-shadow: inset 0 0 0 1px rgba(24, 24, 27, 0.08);
+    }
+
+    .cp-thumb {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cp-hue {
+      position: relative;
+      width: 100%;
+      height: 18px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+      cursor: pointer;
+      touch-action: none;
+      user-select: none;
+      box-shadow: inset 0 0 0 1px rgba(24, 24, 27, 0.1);
+    }
+
+    .cp-hue-thumb {
+      position: absolute;
+      top: 50%;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2.5px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.32), inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cp-foot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cp-preview {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(24, 24, 27, 0.12);
+      flex-shrink: 0;
+    }
+
+    .cp-hex {
+      flex: 1;
+      min-height: 40px !important;
+      padding: 6px 12px !important;
+      font-size: 0.9rem !important;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+    }
+
+    /* ---------- Logo Upload ---------- */
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .file-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px dashed rgba(24, 24, 27, 0.2);
+      color: var(--ink);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .file-pill:hover {
+      border-color: var(--accent);
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .file-pill input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .logo-thumb-wrap {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px 4px 5px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(24, 24, 27, 0.1);
+    }
+
+    .logo-thumb-wrap.visible { display: inline-flex; }
+
+    .logo-thumb {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    /* ---------- Advanced Accordion (<details>) ---------- */
+    .advanced-box {
+      margin-top: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      overflow: hidden;
+    }
+
+    .advanced-box summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 13px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      user-select: none;
+    }
+
+    .advanced-box summary::-webkit-details-marker { display: none; }
+
+    .chevron {
+      transition: transform 0.3s var(--ease-out-expo);
+      color: var(--muted);
+    }
+
+    .advanced-box[open] .chevron { transform: rotate(180deg); }
+
+    .advanced-body {
+      padding: 4px 16px 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .advanced-box[open] .advanced-body {
+      animation: fade-rise 0.35s var(--ease-out-expo) both;
+    }
+
+    /* ---------- Progressive Reveal (shows after user enters link/data) ---------- */
+    .customize-reveal {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.985);
+      pointer-events: none;
+      transition:
+        grid-template-rows 0.55s var(--ease-out-expo),
+        opacity 0.42s var(--ease-out-expo),
+        transform 0.55s var(--ease-out-expo);
+    }
+
+    .customize-reveal.is-open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .customize-inner {
+      overflow: hidden;
+      padding: 10px;
+      margin: -10px;
+    }
+
+    .customize-step {
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity 0.45s var(--ease-out-expo),
+        transform 0.52s var(--ease-out-expo);
+    }
+
+    .customize-reveal.is-open .customize-step {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .customize-reveal.is-open .customize-step:nth-child(1) { transition-delay: 40ms; }
+    .customize-reveal.is-open .customize-step:nth-child(2) { transition-delay: 100ms; }
+    .customize-reveal.is-open .customize-step:nth-child(3) { transition-delay: 160ms; }
+    .customize-reveal.is-open .customize-step:nth-child(4) { transition-delay: 220ms; }
+
+    .color-picker-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="color"] {
+      width: 44px;
+      height: 44px;
+      padding: 3px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(24, 24, 27, 0.12);
+      background: #ffffff;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .pill-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .pill-choice {
+      min-height: 42px;
+      padding: 6px 10px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(24, 24, 27, 0.1);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pill-choice[aria-pressed="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #ffffff;
+    }
+
+    /* ---------- Live Preview Card ---------- */
+    .preview-card {
+      position: sticky;
+      top: 84px;
+      text-align: center;
+    }
+
+    @media (max-width: 680px) {
+      .preview-card { position: static; }
+    }
+
+    .qr-stage {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 280px;
+      margin: 6px auto 16px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(24, 24, 27, 0.08);
+      box-shadow: inset 0 2px 10px rgba(24, 24, 27, 0.04), 0 12px 28px -14px rgba(24, 24, 27, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .qr-stage canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .qr-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      color: var(--muted);
+    }
+
+    .qr-placeholder-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-placeholder p {
+      font-size: 0.9rem;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    .warn-banner {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .warn-banner.visible { display: flex; }
+
+    .preview-meta {
+      font-size: 0.825rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      min-height: 22px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0 8px;
+    }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      appearance: none;
+      border: 1.5px solid transparent;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform 0.25s var(--ease-spring), background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .btn:active:not(:disabled) { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--ink);
+      color: #ffffff;
+      box-shadow: 0 14px 28px -12px rgba(24, 24, 27, 0.65);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #27272a;
+      transform: translateY(-2px);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 12px 24px -10px rgba(190, 18, 60, 0.55);
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      background: var(--accent-strong);
+      transform: translateY(-1px);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--ink);
+      border-color: rgba(24, 24, 27, 0.12);
+    }
+
+    .btn-glass:hover:not(:disabled) {
+      background: #ffffff;
+      border-color: rgba(24, 24, 27, 0.24);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(185, 28, 28, 0.08);
+      color: var(--danger);
+      border-color: rgba(185, 28, 28, 0.22);
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: rgba(185, 28, 28, 0.14);
+    }
+
+    .btn-sm {
+      min-height: 40px;
+      padding: 0 14px;
+      font-size: 0.85rem;
+      border-radius: 12px;
+    }
+
+    .btn-icon {
+      min-height: 40px;
+      width: 40px;
+      padding: 0;
+      border-radius: 12px;
+    }
+
+    .preview-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .preview-sub-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ---------- Saved Collection ---------- */
+    .saved-section {
+      margin-top: 32px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .toolbar h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+      gap: 16px;
+    }
+
+    .qr-card {
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s var(--ease-out-expo);
+      animation: fade-rise 0.4s var(--ease-out-expo) both;
+    }
+
+    @media (hover: hover) {
+      .qr-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 22px 46px -20px rgba(24, 24, 27, 0.28);
+      }
+    }
+
+    .qr-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(24, 24, 27, 0.06);
+    }
+
+    .qr-card-title {
+      font-size: 0.925rem;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .qr-card-body {
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .qr-card-body canvas {
+      width: 180px;
+      height: 180px;
+      border-radius: 12px;
+      display: block;
+      box-shadow: 0 4px 14px -6px rgba(24, 24, 27, 0.16);
+    }
+
+    .qr-card-foot {
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .qr-card-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .qr-card-btns {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 6px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      border-radius: 24px;
+      padding: 36px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-state p { font-size: 0.95rem; }
+
+    /* ---------- Footer with Clickable Creator Credit & Policy ---------- */
+    footer {
+      margin-top: 36px;
+      padding: 0 16px max(28px, env(safe-area-inset-bottom));
+    }
+
+    .footer-inner {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      border-radius: 24px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .policy-trigger {
+      appearance: none;
+      border: 1px solid rgba(24, 24, 27, 0.08);
+      background: rgba(255, 255, 255, 0.65);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      min-height: 44px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-align: left;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.25s var(--ease-spring);
+    }
+
+    .policy-trigger:hover {
+      background: #ffffff;
+      border-color: rgba(190, 18, 60, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .policy-trigger .policy-badge {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    dialog.ios-dialog.policy-dialog {
+      max-width: min(720px, calc(100vw - 32px));
+    }
+
+    .policy-card {
+      border-radius: 28px;
+      padding: 28px 32px;
+      text-align: left;
+      max-height: min(86vh, 780px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: pop-in 0.35s var(--ease-spring) both;
+    }
+
+    @media (max-width: 540px) {
+      .policy-card { padding: 20px; }
+    }
+
+    .policy-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(24, 24, 27, 0.08);
+    }
+
+    .policy-head h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .policy-body {
+      overflow-y: auto;
+      padding-right: 10px;
+      display: grid;
+      gap: 18px;
+      font-size: 0.975rem;
+      color: var(--muted);
+      line-height: 1.75;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(24, 24, 27, 0.18) transparent;
+    }
+
+    .policy-body h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .policy-body ul {
+      padding-left: 1.25rem;
+      display: grid;
+      gap: 6px;
+    }
+
+    .policy-body a {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .policy-foot {
+      padding-top: 10px;
+      border-top: 1px solid rgba(24, 24, 27, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .credit-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: var(--radius-pill);
+      background: var(--ink);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: 0 10px 24px -10px rgba(24, 24, 27, 0.55);
+      transition: transform 0.25s var(--ease-spring), background 0.2s ease;
+    }
+
+    .credit-link:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .footer-inner { justify-content: center; text-align: center; }
+    }
+
+    /* ---------- Native <dialog> iOS Modal ---------- */
+    dialog.ios-dialog {
+      margin: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      max-width: min(380px, calc(100vw - 32px));
+      width: 100%;
+      overflow: visible;
+    }
+
+    dialog.ios-dialog::backdrop {
+      background: rgba(24, 24, 27, 0.38);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+    }
+
+    .dialog-card {
+      border-radius: 26px;
+      padding: 24px;
+      text-align: center;
+      animation: pop-in 0.35s var(--ease-spring) both;
+    }
+
+    .dialog-card h3 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .dialog-card p {
+      font-size: 0.925rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .dialog-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* ---------- Floating Glass Toast ---------- */
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(22px, env(safe-area-inset-bottom));
+      z-index: 999;
+      transform: translate(-50%, 80px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 11px 18px;
+      border-radius: var(--radius-pill);
+      color: #ffffff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      max-width: calc(100vw - 32px);
+      transition: transform 0.38s var(--ease-spring), opacity 0.25s ease;
+    }
+
+    #toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    /* ---------- Animations ---------- */
+    @keyframes fade-rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pop-in {
+      from { opacity: 0; transform: scale(0.92) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .shake { animation: shake 0.3s ease; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
-<div class="page">
+  <a href="#main-content" class="skip-link">ข้ามไปที่เนื้อหาหลัก</a>
 
-  <header>
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx=".5"/>
-            <rect x="18" y="14" width="3" height="3" rx=".5"/><rect x="14" y="18" width="3" height="3" rx=".5"/>
-            <rect x="18" y="18" width="3" height="3" rx=".5"/>
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Floating Liquid Glass Navbar -->
+  <header class="navbar-wrap">
+    <nav class="navbar glass-strong" aria-label="แถบนำทางหลัก">
+      <a href="#top" class="brand" aria-label="PortQR หน้าแรก">
+        <img src="./favicon.svg" alt="" width="34" height="34" class="brand-logo" />
+        <span class="brand-title">Port<span>QR</span></span>
+      </a>
+      <div class="nav-actions">
+        <a
+          href="https://www.instagram.com/base_happy19/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nav-pill nav-pill-ig"
+          aria-label="ติดตามผู้พัฒนาบน Instagram: base_happy19"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
           </svg>
-        </div>
-        <div>
-          <div class="brand-name">QR Gen Studio</div>
-          <div class="brand-sub">สร้าง QR Code ได้ง่าย</div>
-        </div>
+          <span>base_happy19</span>
+        </a>
       </div>
-      <div class="count-pill">ทั้งหมด <strong id="count">0</strong> รายการ</div>
-    </div>
+    </nav>
   </header>
 
-  <div class="panel">
-    <div class="panel-title">เพิ่ม QR Code</div>
+  <main id="main-content" class="container">
+    <!-- Hero -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <h1 id="hero-title">สร้าง <span class="accent-text">QR Code</span> ง่ายใน 3 วินาที</h1>
+      <p>วางลิงก์ผลงานเพิ่มเติม Google Drive, YouTube, Canva หรือไอจี แต่งสีและใส่โลโก้ได้ทันที โหลดหรือคัดลอกไปแปะในพอร์ต ในงานได้เลย</p>
+    </section>
 
-    <div class="field">
-      <label for="input-url">URL หรือข้อความ <span style="color:var(--danger)">*</span></label>
-      <input type="url" id="input-url" placeholder="https://example.com" />
-    </div>
+    <!-- Main Studio -->
+    <section class="studio-grid" aria-label="เครื่องมือสร้าง QR Code">
+      <!-- Left: Controls -->
+      <div class="card glass">
+        <div class="section-eyebrow">
+          <span>1. เลือกประเภทที่อยากสร้าง</span>
+        </div>
 
-    <div class="add-row" style="margin-bottom:16px">
-      <div>
-        <label for="input-label">ชื่อ / คำอธิบาย</label>
-        <input type="text" id="input-label" placeholder="เช่น เว็บไซต์หลัก, Instagram" />
+        <!-- iOS Segmented Control -->
+        <div class="segmented" role="tablist" aria-label="ประเภทของ QR Code">
+          <div class="seg-indicator" id="seg-indicator" aria-hidden="true"></div>
+          <button type="button" class="seg-btn" role="tab" id="tab-link" aria-selected="true" aria-controls="panel-link" data-mode="link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <span>ลิงก์ / ข้อความ</span>
+          </button>
+          <button type="button" class="seg-btn" role="tab" id="tab-ig" aria-selected="false" aria-controls="panel-ig" data-mode="ig">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <span>Instagram</span>
+          </button>
+          <button type="button" class="seg-btn" role="tab" id="tab-wifi" aria-selected="false" aria-controls="panel-wifi" data-mode="wifi">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            <span>Wi-Fi</span>
+          </button>
+        </div>
+
+        <!-- Panel 1: Link / Text -->
+        <div id="panel-link" class="mode-panel active" role="tabpanel" aria-labelledby="tab-link">
+          <div class="field">
+            <label for="input-url" class="field-label">
+              <span>วางลิงก์ หรือพิมพ์ข้อความ</span>
+            </label>
+            <div class="input-wrap">
+              <input
+                type="text"
+                id="input-url"
+                class="input has-action"
+                placeholder="เช่น ลิงก์ผลงาน Google Drive, YouTube, Canva"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button type="button" class="input-inline-btn" id="btn-paste" aria-label="วางข้อความจากคลิปบอร์ด">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                วาง
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Instagram -->
+        <div id="panel-ig" class="mode-panel" role="tabpanel" aria-labelledby="tab-ig">
+          <div class="field">
+            <label for="input-ig" class="field-label">
+              <span>ชื่อผู้ใช้ Instagram</span>
+              <span class="field-hint">พิมพ์แค่ชื่อได้เลย ไม่ต้องใส่ลิงก์ยาว</span>
+            </label>
+            <div class="input-wrap">
+              <span class="input-prefix" aria-hidden="true">@</span>
+              <input
+                type="text"
+                id="input-ig"
+                class="input has-prefix"
+                placeholder="base_happy19"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Wi-Fi -->
+        <div id="panel-wifi" class="mode-panel" role="tabpanel" aria-labelledby="tab-wifi">
+          <div class="two-col">
+            <div class="field">
+              <label for="input-wifi-ssid" class="field-label"><span>ชื่อ Wi-Fi</span></label>
+              <input type="text" id="input-wifi-ssid" class="input" placeholder="เช่น School_WiFi" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for="input-wifi-pass" class="field-label"><span>รหัสผ่าน</span></label>
+              <input type="text" id="input-wifi-pass" class="input" placeholder="ปล่อยว่างได้ถ้าไม่มีรหัส" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Progressive Reveal: Customization (appears once link/data is entered) -->
+        <div class="customize-reveal" id="customize-reveal" aria-hidden="true" inert>
+          <div class="customize-inner">
+            <!-- Optional Note Label -->
+            <div class="field customize-step" style="margin-top: 14px;">
+              <label for="input-label" class="field-label">
+                <span>ตั้งชื่อจำง่าย <span class="field-hint">(ไม่ใส่ก็ได้)</span></span>
+              </label>
+              <input type="text" id="input-label" class="input" placeholder="เช่น ผลงานเพิ่มเติม, คลิปนำเสนอ, เกียรติบัตร" autocomplete="off" />
+            </div>
+
+            <!-- Step 2: Color Swatches -->
+            <div class="field customize-step">
+              <div class="divider"></div>
+              <div class="section-eyebrow">
+                <span>2. เลือกสี QR Code</span>
+                <span class="field-hint" id="color-name-label">ดำคลาสสิก</span>
+              </div>
+              <div class="swatches" role="group" aria-label="ชุดสี QR Code สำเร็จรูป">
+                <button type="button" class="swatch" style="background:#18181b" data-dark="#18181b" data-light="#ffffff" data-name="ดำคลาสสิก" aria-label="สีดำคลาสสิก" aria-pressed="true">
+                  <svg class="swatch-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <button type="button" class="swatch" style="background:#be123c" data-dark="#be123c" data-light="#ffffff" data-name="กุหลาบ" aria-label="สีกุหลาบ" aria-pressed="false">
+                  <svg class="swatch-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <button type="button" class="swatch" style="background:#1d4ed8" data-dark="#1d4ed8" data-light="#ffffff" data-name="น้ำเงิน" aria-label="สีน้ำเงิน" aria-pressed="false">
+                  <svg class="swatch-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <button type="button" class="swatch" style="background:#6d28d9" data-dark="#6d28d9" data-light="#ffffff" data-name="ม่วง" aria-label="สีม่วง" aria-pressed="false">
+                  <svg class="swatch-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <button type="button" class="swatch" style="background:#047857" data-dark="#047857" data-light="#ffffff" data-name="เขียว" aria-label="สีเขียว" aria-pressed="false">
+                  <svg class="swatch-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <button type="button" class="swatch" style="background:#78350f" data-dark="#78350f" data-light="#fffbeb" data-name="โกโก้" aria-label="สีโกโก้" aria-pressed="false">
+                  <svg class="swatch-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <button type="button" class="swatch swatch-custom" id="btn-custom-color" aria-label="เลือกสีอิสระ" aria-expanded="false" aria-controls="cp-drawer" title="เลือกสีอิสระ">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+              </div>
+
+              <!-- Custom iOS Liquid Glass Color Picker -->
+              <div class="cp-drawer" id="cp-drawer" aria-hidden="true">
+                <div class="cp-drawer-inner">
+                  <div class="cp-panel" role="group" aria-label="ตัวเลือกสีอิสระ">
+                    <div class="cp-tabs" role="tablist" aria-label="เลือกส่วนที่ต้องการเปลี่ยนสี">
+                      <button type="button" class="cp-tab" id="cp-tab-dark" role="tab" aria-selected="true" data-target="dark">
+                        <span class="cp-dot" id="cp-dot-dark" style="background:#18181b"></span>
+                        <span>สีตัว QR</span>
+                      </button>
+                      <button type="button" class="cp-tab" id="cp-tab-light" role="tab" aria-selected="false" data-target="light">
+                        <span class="cp-dot" id="cp-dot-light" style="background:#ffffff"></span>
+                        <span>สีพื้นหลัง</span>
+                      </button>
+                    </div>
+
+                    <div class="cp-sv" id="cp-sv" role="slider" aria-label="เลือกความสดและความสว่างของสี" tabindex="0">
+                      <div class="cp-thumb" id="cp-sv-thumb"></div>
+                    </div>
+
+                    <div class="cp-hue" id="cp-hue" role="slider" aria-label="เลือกเฉดสี" aria-valuemin="0" aria-valuemax="360" tabindex="0">
+                      <div class="cp-hue-thumb" id="cp-hue-thumb"></div>
+                    </div>
+
+                    <div class="cp-foot">
+                      <div class="cp-preview" id="cp-preview" style="background:#18181b" aria-hidden="true"></div>
+                      <input type="text" id="cp-hex" class="input cp-hex" value="#18181B" maxlength="7" aria-label="รหัสสี HEX" spellcheck="false" />
+                      <button type="button" class="btn btn-glass btn-sm" id="cp-done">เสร็จ</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Logo Upload -->
+            <div class="field customize-step" style="margin-top: 18px;">
+              <div class="section-eyebrow">
+                <span>3. ใส่โลโก้หรือรูปตรงกลาง <span class="field-hint">(ไม่ใส่ก็ได้)</span></span>
+              </div>
+              <div class="logo-row">
+                <label class="file-pill">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                  <span>เลือกรูปโลโก้</span>
+                  <input type="file" id="input-logo" accept="image/*" />
+                </label>
+                <div class="logo-thumb-wrap" id="logo-thumb-wrap">
+                  <img id="logo-preview" class="logo-thumb" src="" alt="ตัวอย่างโลโก้ที่เลือก" />
+                  <button type="button" class="btn btn-glass btn-sm" id="btn-clear-logo" style="min-height:32px;padding:0 10px;">เอาออก</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Collapsible Advanced Options -->
+            <details class="advanced-box customize-step">
+              <summary>
+                <span>ปรับแต่งเพิ่มเติม (ขนาดรูป, ลาย QR)</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </summary>
+              <div class="advanced-body">
+                <div>
+                  <span class="field-label"><span>ขนาดรูปตอนดาวน์โหลด</span></span>
+                  <div class="pill-group" role="group" aria-label="ขนาดความคมชัดของไฟล์ PNG">
+                    <button type="button" class="pill-choice" data-size="256" aria-pressed="false">เล็ก (256px)</button>
+                    <button type="button" class="pill-choice" data-size="512" aria-pressed="true">กลาง (512px)</button>
+                    <button type="button" class="pill-choice" data-size="1024" aria-pressed="false">ชัดมาก (1024px)</button>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="field-label">
+                    <span>ช่วยให้สแกนติดง่าย</span>
+                    <span class="field-hint">ใส่โลโก้ระบบจะเลือกให้อัตโนมัติ</span>
+                  </span>
+                  <div class="pill-group" role="group" aria-label="ระดับช่วยให้สแกนติดง่าย">
+                    <button type="button" class="pill-choice" data-ec="M" aria-pressed="true">ปกติ</button>
+                    <button type="button" class="pill-choice" data-ec="Q" aria-pressed="false">เผื่อพิมพ์เล็ก</button>
+                    <button type="button" class="pill-choice" data-ec="H" aria-pressed="false">เผื่อใส่โลโก้</button>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
       </div>
-      <div style="align-self:flex-end">
-        <button class="btn btn-primary" onclick="addQR()">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-          สร้าง QR
+
+      <!-- Right: Live Preview -->
+      <aside class="card glass-strong preview-card" aria-label="ตัวอย่าง QR Code แบบเรียลไทม์">
+        <div class="section-eyebrow" style="justify-content:center;">
+          <span>ตัวอย่าง QR Code ของคุณ</span>
+        </div>
+
+        <div class="qr-stage" id="live-stage">
+          <div class="qr-placeholder" id="live-placeholder">
+            <div class="qr-placeholder-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="3" height="3" rx=".5"/>
+                <rect x="18" y="14" width="3" height="3" rx=".5"/><rect x="14" y="18" width="3" height="3" rx=".5"/>
+                <rect x="18" y="18" width="3" height="3" rx=".5"/>
+              </svg>
+            </div>
+            <p>พิมพ์หรือวางลิงก์ด้านซ้าย<br>QR Code จะขึ้นตรงนี้ทันที</p>
+          </div>
+          <canvas id="live-canvas" width="512" height="512" style="display:none;" aria-label="รูปตัวอย่าง QR Code"></canvas>
+        </div>
+
+        <div class="warn-banner" id="contrast-warn" role="alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>สีใกล้เคียงกันเกินไป อาจสแกนยากนะ</span>
+        </div>
+
+        <div class="preview-actions">
+          <button type="button" class="btn btn-primary" id="btn-download-live" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>ดาวน์โหลด PNG</span>
+          </button>
+          <div class="preview-sub-actions">
+            <button type="button" class="btn btn-glass" id="btn-copy-live" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>คัดลอกรูป</span>
+            </button>
+            <button type="button" class="btn btn-accent" id="btn-save-item" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>เก็บในรายการ</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Saved Collection -->
+    <section class="saved-section" id="saved-section" aria-labelledby="saved-heading">
+      <div class="toolbar">
+        <h2 id="saved-heading">
+          <span>รายการที่เก็บไว้</span>
+          <span class="count-badge" id="list-count">0</span>
+        </h2>
+        <div class="toolbar-actions">
+          <button type="button" class="btn btn-glass btn-sm" id="btn-download-all">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>โหลดทั้งหมด</span>
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" id="btn-clear-all">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            <span>ลบทั้งหมด</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="cards-grid">
+        <div class="empty-state glass" id="empty-state">
+          <p>ยังไม่มีรายการที่เก็บไว้ — ถ้าต้องทำ QR ผลงานหลายชิ้น กด <strong>เก็บในรายการ</strong> เพื่อรวมไว้โหลดใส่พอร์ตทีเดียวได้เลย</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer with Clickable Privacy Policy & Creator Credit -->
+  <footer>
+    <div class="footer-inner glass">
+      <button type="button" class="policy-trigger" id="btn-open-policy" aria-haspopup="dialog" aria-controls="policy-dialog">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+        <span>PortQR • ไม่เก็บข้อมูล <span class="policy-badge">อ่านนโยบายและข้อกำหนด</span></span>
+      </button>
+      <a
+        href="https://www.instagram.com/base_happy19/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="credit-link"
+        aria-label="เครดิตผู้พัฒนา IG: base_happy19 (เปิดในแท็บใหม่)"
+      >
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+        <span>ออกแบบและพัฒนาโดย IG: base_happy19</span>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Hidden Scratch Container for qrcodejs -->
+  <div id="qr-scratch" class="sr-only" aria-hidden="true"></div>
+
+  <!-- Native iOS Confirmation Dialog -->
+  <dialog id="confirm-dialog" class="ios-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
+    <div class="dialog-card glass-strong">
+      <h3 id="dialog-title">ยืนยันการลบ</h3>
+      <p id="dialog-desc">ต้องการลบรายการนี้ใช่หรือไม่?</p>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-glass" id="dialog-cancel">ยกเลิก</button>
+        <button type="button" class="btn btn-danger" id="dialog-confirm">ลบเลย</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Legal, Privacy Policy & Terms Dialog -->
+  <dialog id="policy-dialog" class="ios-dialog policy-dialog" aria-labelledby="policy-title">
+    <div class="policy-card glass-strong">
+      <div class="policy-head">
+        <h3 id="policy-title">นโยบายความเป็นส่วนตัวและข้อกำหนดการใช้งาน</h3>
+        <button type="button" class="btn btn-glass btn-icon" id="btn-close-policy-x" aria-label="ปิดหน้าต่างนโยบาย">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-    </div>
+      <div class="policy-body">
+        <section>
+          <h4>1. การรับประกันไม่เก็บข้อมูล (Privacy Policy &amp; PDPA)</h4>
+          <ul>
+            <li><strong>ประมวลผลในอุปกรณ์ของคุณ 100%:</strong> ลิงก์ผลงาน ข้อความ ชื่อบัญชี Instagram รหัสผ่าน Wi-Fi และรูปโลโก้ที่คุณอัปโหลดทั้งหมด ถูกสร้างเป็น QR Code ภายในเบราว์เซอร์ของคุณเท่านั้น ไม่มีการส่ง อัปโหลด หรือจัดเก็บไว้บนเซิร์ฟเวอร์ใด ๆ</li>
+            <li><strong>ไม่มีคุกกี้ติดตามหรือโฆษณา:</strong> เว็บไซต์ไม่เก็บข้อมูลส่วนบุคคล ไม่ติดตามพฤติกรรม และไม่ขายหรือเผยแพร่ข้อมูลให้บุคคลที่สาม สอดคล้องกับ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)</li>
+            <li><strong>การบันทึกเฉพาะในเครื่อง (Local Storage):</strong> เมื่อคุณกด "เก็บในรายการ" ข้อมูลจะถูกบันทึกไว้เฉพาะในเบราว์เซอร์ของอุปกรณ์คุณเอง (ไม่บันทึกรูปโลโก้) และคุณสามารถกด "ลบทั้งหมด" เพื่อล้างออกได้ทันทีทุกเมื่อ</li>
+            <li><strong>ทรัพยากรภายนอก:</strong> เว็บไซต์เรียกใช้เฉพาะฟอนต์จาก Google Fonts และไลบรารีสร้าง QR จาก cdnjs เพื่อการแสดงผล โดยไม่มีการส่งข้อมูลที่คุณกรอกไปยังบริการเหล่านั้น</li>
+          </ul>
+        </section>
 
-    <div class="divider"></div>
-    <div class="panel-title">ตั้งค่า</div>
+        <section>
+          <h4>2. สิทธิ์ใน QR Code ที่สร้างขึ้น (Ownership &amp; No Expiry)</h4>
+          <p>QR Code ที่สร้างจากเว็บไซต์นี้เป็นแบบ <strong>Static QR Code</strong> ไม่มีลายน้ำ ไม่มีวันหมดอายุ และไม่ผูกกับลิงก์ย่อของเว็บไซต์ คุณมีสิทธิ์นำไปใช้ในพอร์ตโฟลิโอ รายงาน หรือสื่อต่าง ๆ ได้อย่างอิสระ ตราบเท่าที่ลิงก์ปลายทางของคุณยังใช้งานได้</p>
+        </section>
 
-    <div class="grid-4" style="margin-bottom:16px">
-      <div>
-        <label>สี QR</label>
-        <div class="color-row">
-          <input type="color" id="color-dark" value="#000000" oninput="syncHex('color-dark','hex-dark')"/>
-          <input type="text" id="hex-dark" class="color-hex" value="#000000" maxlength="7" oninput="syncColor('hex-dark','color-dark')"/>
-        </div>
-      </div>
-      <div>
-        <label>สีพื้นหลัง</label>
-        <div class="color-row">
-          <input type="color" id="color-light" value="#ffffff" oninput="syncHex('color-light','hex-light')"/>
-          <input type="text" id="hex-light" class="color-hex" value="#ffffff" maxlength="7" oninput="syncColor('hex-light','color-light')"/>
-        </div>
-      </div>
-      <div>
-        <label for="input-size">ขนาด (px)</label>
-        <input type="text" id="input-size" value="256" placeholder="256"/>
-      </div>
-      <div>
-        <label for="input-ec">Error Correction</label>
-        <select id="input-ec">
-          <option value="L">L — 7%</option>
-          <option value="M" selected>M — 15%</option>
-          <option value="Q">Q — 25%</option>
-          <option value="H">H — 30%</option>
-        </select>
-      </div>
-    </div>
+        <section>
+          <h4>3. ข้อกำหนดการใช้งานและข้อจำกัดความรับผิด (Terms &amp; Disclaimer)</h4>
+          <ul>
+            <li>เว็บไซต์ให้บริการฟรีตามสภาพ ("As-Is") เพื่ออำนวยความสะดวกด้านการศึกษาและงานทั่วไป</li>
+            <li>ผู้ใช้งานเป็นผู้รับผิดชอบต่อความถูกต้องและความชอบด้วยกฎหมายของข้อมูลหรือลิงก์ที่นำมาสร้าง QR Code ห้ามนำไปใช้เพื่อการหลอกลวง ฟิชชิ่ง หรือการกระทำที่ผิดกฎหมาย</li>
+            <li>เพื่อความมั่นใจ <strong>โปรดทดลองสแกน QR Code ด้วยกล้องมือถือก่อนนำไปพิมพ์หรือส่งพอร์ตโฟลิโอทุกครั้ง</strong> โดยเฉพาะกรณีปรับสีเองหรือใส่โลโก้ตรงกลาง</li>
+          </ul>
+        </section>
 
-    <div>
-      <label>โลโก้ตรงกลาง <span style="font-weight:400;color:#aaa">(ไม่บังคับ — แนะนำ EC = H)</span></label>
-      <div class="logo-upload">
-        <label class="logo-file-btn">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14"/><rect x="2" y="4" width="20" height="16" rx="3"/></svg>
-          เลือกรูป
-          <input type="file" id="input-logo" accept="image/*" onchange="previewLogo(this)"/>
-        </label>
-        <button class="btn btn-ghost btn-sm" onclick="clearLogo()">ลบโลโก้</button>
-        <img id="logo-preview" src="" alt="" />
+        <section>
+          <h4>4. ติดต่อผู้พัฒนา</h4>
+          <p>หากพบปัญหาการใช้งานหรือมีข้อเสนอแนะ สามารถติดต่อได้ที่ <a href="https://www.instagram.com/base_happy19/" target="_blank" rel="noopener noreferrer">Instagram: @base_happy19</a></p>
+        </section>
+      </div>
+      <div class="policy-foot">
+        <span class="field-hint">อัปเดตล่าสุด: พฤศจิกายน 2026</span>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-close-policy" style="width:auto;padding:0 22px;">รับทราบ</button>
       </div>
     </div>
+  </dialog>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="glass-dark" role="status" aria-live="polite">
+    <span id="toast-msg">พร้อมใช้งาน</span>
   </div>
 
-  <div class="toolbar">
-    <div class="toolbar-left">QR Code ทั้งหมด <strong id="count2">0</strong> รายการ</div>
-    <div class="toolbar-right">
-      <button class="btn btn-ghost btn-sm" onclick="downloadAll()">
-        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/></svg>
-        ดาวน์โหลดทั้งหมด
-      </button>
-      <button class="btn btn-danger btn-sm" onclick="confirmClearAll()">
-        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7V4h6v3M4 7h16"/></svg>
-        ลบทั้งหมด
-      </button>
-    </div>
-  </div>
+  <script>
+    (() => {
+      const STORAGE_KEY = 'qrgen_studio_items_v2';
+      let mode = 'link';
+      let qrSize = 512;
+      let darkColor = '#18181b';
+      let lightColor = '#ffffff';
+      let ecLevel = 'M';
+      let logoDataUrl = null;
+      let items = [];
+      let idCounter = 0;
+      let renderTimer = null;
+      let toastTimer = null;
+      let dialogCallback = null;
 
-  <div id="cards-grid">
-    <div id="empty-state" class="visible">
-      <div class="empty-icon">🔳</div>
-      <p>ยังไม่มี QR Code<br>กรอก URL แล้วกด <strong>สร้าง QR</strong> ด้านบน</p>
-    </div>
-  </div>
+      const $ = (id) => document.getElementById(id);
 
-</div>
+      const els = {
+        segIndicator: $('seg-indicator'),
+        tabs: Array.from(document.querySelectorAll('.seg-btn')),
+        panels: { link: $('panel-link'), ig: $('panel-ig'), wifi: $('panel-wifi') },
+        inputUrl: $('input-url'),
+        inputIg: $('input-ig'),
+        inputWifiSsid: $('input-wifi-ssid'),
+        inputWifiPass: $('input-wifi-pass'),
+        inputLabel: $('input-label'),
+        btnCustomColor: $('btn-custom-color'),
+        cpDrawer: $('cp-drawer'),
+        cpTabDark: $('cp-tab-dark'),
+        cpTabLight: $('cp-tab-light'),
+        cpDotDark: $('cp-dot-dark'),
+        cpDotLight: $('cp-dot-light'),
+        cpSv: $('cp-sv'),
+        cpSvThumb: $('cp-sv-thumb'),
+        cpHue: $('cp-hue'),
+        cpHueThumb: $('cp-hue-thumb'),
+        cpPreview: $('cp-preview'),
+        cpHex: $('cp-hex'),
+        cpDone: $('cp-done'),
+        colorName: $('color-name-label'),
+        inputLogo: $('input-logo'),
+        logoPreview: $('logo-preview'),
+        logoThumbWrap: $('logo-thumb-wrap'),
+        liveCanvas: $('live-canvas'),
+        livePlaceholder: $('live-placeholder'),
+        contrastWarn: $('contrast-warn'),
+        btnDownloadLive: $('btn-download-live'),
+        btnCopyLive: $('btn-copy-live'),
+        btnSaveItem: $('btn-save-item'),
+        btnPaste: $('btn-paste'),
+        customizeReveal: $('customize-reveal'),
+        btnClearLogo: $('btn-clear-logo'),
+        btnDownloadAll: $('btn-download-all'),
+        btnClearAll: $('btn-clear-all'),
+        cardsGrid: $('cards-grid'),
+        emptyState: $('empty-state'),
+        listCount: $('list-count'),
+        scratch: $('qr-scratch'),
+        dialog: $('confirm-dialog'),
+        dialogTitle: $('dialog-title'),
+        dialogDesc: $('dialog-desc'),
+        dialogCancel: $('dialog-cancel'),
+        dialogConfirm: $('dialog-confirm'),
+        policyDialog: $('policy-dialog'),
+        btnOpenPolicy: $('btn-open-policy'),
+        btnClosePolicy: $('btn-close-policy'),
+        btnClosePolicyX: $('btn-close-policy-x'),
+        toast: $('toast'),
+        toastMsg: $('toast-msg'),
+      };
 
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
-  <div class="modal">
-    <h3 id="modal-title">ยืนยันการลบ</h3>
-    <p id="modal-body">คุณต้องการลบ QR Code นี้ใช่หรือไม่?</p>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">ยกเลิก</button>
-      <button class="btn btn-danger" id="modal-confirm">ลบ</button>
-    </div>
-  </div>
-</div>
+      function showToast(msg) {
+        clearTimeout(toastTimer);
+        els.toastMsg.textContent = msg;
+        els.toast.classList.add('show');
+        toastTimer = setTimeout(() => els.toast.classList.remove('show'), 2600);
+      }
 
-<div id="toast">
-  <span id="toast-icon">✓</span>
-  <span id="toast-msg">สำเร็จ</span>
-</div>
+      function escapeWifi(s) {
+        return String(s).replace(/([\\;,:"])/g, '\\$1');
+      }
 
-<script>
-  let items = [];
-  let logoDataUrl = null;
-  let idCounter = 0;
+      function getPayload() {
+        if (mode === 'link') {
+          const v = els.inputUrl.value.trim();
+          return { text: v, autoLabel: v };
+        }
+        if (mode === 'ig') {
+          let u = els.inputIg.value.trim();
+          if (!u) return { text: '', autoLabel: '' };
+          u = u.replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/^@+/, '').replace(/\/.*$/, '').trim();
+          if (!u) return { text: '', autoLabel: '' };
+          return { text: 'https://www.instagram.com/' + u + '/', autoLabel: 'IG: @' + u };
+        }
+        const ssid = els.inputWifiSsid.value.trim();
+        if (!ssid) return { text: '', autoLabel: '' };
+        const pass = els.inputWifiPass.value;
+        const auth = pass ? 'WPA' : 'nopass';
+        const text = `WIFI:T:${auth};S:${escapeWifi(ssid)};P:${escapeWifi(pass)};;`;
+        return { text, autoLabel: 'Wi-Fi: ' + ssid };
+      }
 
-  function syncHex(colorId, hexId) {
-    document.getElementById(hexId).value = document.getElementById(colorId).value;
-  }
+      function hexToRgb(hex) {
+        const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        if (!m) return [0, 0, 0];
+        return [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)];
+      }
 
-  function syncColor(hexId, colorId) {
-    const v = document.getElementById(hexId).value;
-    if (/^#[0-9a-fA-F]{6}$/.test(v)) document.getElementById(colorId).value = v;
-  }
+      function luminance(hex) {
+        const [r, g, b] = hexToRgb(hex).map((v) => {
+          const c = v / 255;
+          return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      }
 
-  function previewLogo(input) {
-    const file = input.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      logoDataUrl = e.target.result;
-      const prev = document.getElementById('logo-preview');
-      prev.src = logoDataUrl;
-      prev.style.display = 'block';
-      const ec = document.getElementById('input-ec');
-      if (ec && (ec.value === 'L' || ec.value === 'M')) ec.value = 'H';
-    };
-    reader.readAsDataURL(file);
-  }
+      function contrastRatio(c1, c2) {
+        const l1 = luminance(c1);
+        const l2 = luminance(c2);
+        return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      }
 
-  function clearLogo() {
-    logoDataUrl = null;
-    document.getElementById('input-logo').value = '';
-    const prev = document.getElementById('logo-preview');
-    prev.src = '';
-    prev.style.display = 'none';
-  }
+      function checkContrast() {
+        const ratio = contrastRatio(darkColor, lightColor);
+        els.contrastWarn.classList.toggle('visible', ratio < 3.0);
+      }
 
-  function addQR() {
-    const url   = document.getElementById('input-url').value.trim();
-    const label = document.getElementById('input-label').value.trim() || url;
-    if (!url) { toast('⚠', 'กรุณากรอก URL ก่อน'); shakeInput('input-url'); return; }
+      // Render crisp QR with quiet-zone margin + optional centered circular logo onto targetCanvas
+      function drawQRToCanvas(targetCanvas, text, opts, logoSrc) {
+        if (typeof QRCode === 'undefined') return;
+        const size = opts.size || 512;
+        const quiet = Math.round(size * 0.075);
+        const inner = size - quiet * 2;
 
-    const size  = Math.min(Math.max(parseInt(document.getElementById('input-size').value) || 256, 64), 1024);
-    const ec    = document.getElementById('input-ec').value;
-    const dark  = document.getElementById('hex-dark').value || '#000000';
-    const light = document.getElementById('hex-light').value || '#ffffff';
+        els.scratch.innerHTML = '';
+        new QRCode(els.scratch, {
+          text,
+          width: inner,
+          height: inner,
+          colorDark: opts.dark,
+          colorLight: opts.light,
+          correctLevel: QRCode.CorrectLevel[opts.ec || 'M'],
+        });
 
-    const item = { id: ++idCounter, label, url, opts: { size, ec, dark, light }, logoDataUrl: logoDataUrl || null };
-    items.push(item);
-    renderCard(item);
-    updateCount();
-    toast('✓', 'เพิ่มแล้ว: ' + label);
-    document.getElementById('input-url').value = '';
-    document.getElementById('input-label').value = '';
-  }
+        const srcCanvas = els.scratch.querySelector('canvas');
+        if (!srcCanvas) return;
 
-  function renderCard(item) {
-    document.getElementById('empty-state').classList.remove('visible');
-    const o = item.opts;
-    const card = document.createElement('div');
-    card.className = 'qr-card';
-    card.id = 'card-' + item.id;
-    card.innerHTML =
-      '<div class="card-top">' +
-        '<span class="card-num">#' + item.id + '</span>' +
-        '<span class="card-title" title="' + esc(item.label) + '">' + esc(item.label) + '</span>' +
-        '<div class="card-actions">' +
-          '<button class="btn btn-ghost btn-icon" onclick="downloadQR(' + item.id + ')" title="ดาวน์โหลด">' +
-            '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 4v11"/></svg>' +
-          '</button>' +
-          '<button class="btn btn-icon" style="background:transparent;border:1px solid #f5c6c6;color:var(--danger)" onclick="confirmDelete(' + item.id + ')" title="ลบ">' +
-            '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>' +
-          '</button>' +
-        '</div>' +
-      '</div>' +
-      '<div class="qr-area" id="qr-' + item.id + '"></div>' +
-      '<div class="card-footer">' +
-        '<div class="card-url"><a href="' + esc(item.url) + '" target="_blank" rel="noopener">' + esc(item.url) + '</a></div>' +
-        '<div class="card-tags">' +
-          '<span class="tag"><span class="color-dot" style="background:' + esc(o.dark) + '"></span>' + esc(o.dark) + '</span>' +
-          '<span class="tag">' + o.size + 'px</span>' +
-          '<span class="tag">EC:' + o.ec + '</span>' +
-          (item.logoDataUrl ? '<span class="tag">🖼 โลโก้</span>' : '') +
-        '</div>' +
-      '</div>';
-    document.getElementById('cards-grid').appendChild(card);
-    generateQR(item);
-  }
+        targetCanvas.width = size;
+        targetCanvas.height = size;
+        const ctx = targetCanvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.fillStyle = opts.light || '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+        ctx.drawImage(srcCanvas, quiet, quiet, inner, inner);
 
-  function generateQR(item) {
-    const container = document.getElementById('qr-' + item.id);
-    container.innerHTML = '';
-    const o = item.opts;
-    new QRCode(container, {
-      text: item.url,
-      width: o.size,
-      height: o.size,
-      colorDark: o.dark,
-      colorLight: o.light,
-      correctLevel: QRCode.CorrectLevel[o.ec],
-    });
-    setTimeout(function() {
-      const canvas = container.querySelector('canvas');
-      const imgEl  = container.querySelector('img');
-      if (canvas) canvas.style.display = 'block';
-      if (imgEl)  imgEl.style.display  = 'none';
-      if (item.logoDataUrl) overlayLogo(container, item);
-    }, 60);
-  }
+        if (logoSrc) {
+          const img = new Image();
+          img.onload = () => {
+            const ls = inner * 0.22;
+            const cx = size / 2;
+            const cy = size / 2;
+            const pad = Math.max(5, Math.round(size * 0.015));
 
-  function overlayLogo(container, item) {
-    const canvas = container.querySelector('canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const s  = item.opts.size;
-    const ls = s * 0.22;
-    const x  = (s - ls) / 2;
-    const y  = (s - ls) / 2;
-    const img = new Image();
-    img.onload = function() {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(s / 2, s / 2, ls / 2 + 5, 0, Math.PI * 2);
-      ctx.fillStyle = item.opts.light || '#ffffff';
-      ctx.fill();
-      ctx.restore();
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(s / 2, s / 2, ls / 2, 0, Math.PI * 2);
-      ctx.clip();
-      ctx.drawImage(img, x, y, ls, ls);
-      ctx.restore();
-      const imgEl = container.querySelector('img');
-      if (imgEl) imgEl.style.display = 'none';
-    };
-    img.src = item.logoDataUrl;
-  }
+            ctx.imageSmoothingEnabled = true;
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(cx, cy, ls / 2 + pad, 0, Math.PI * 2);
+            ctx.fillStyle = opts.light || '#ffffff';
+            ctx.fill();
+            ctx.restore();
 
-  function downloadQR(id) {
-    const item = items.find(function(i) { return i.id === id; });
-    if (!item) return;
-    const canvas = document.querySelector('#qr-' + id + ' canvas');
-    if (!canvas) { toast('⚠', 'ไม่พบ QR image'); return; }
-    const a = document.createElement('a');
-    a.download = 'qr-' + slug(item.label) + '-' + id + '.png';
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-    toast('↓', 'ดาวน์โหลด: ' + item.label);
-  }
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(cx, cy, ls / 2, 0, Math.PI * 2);
+            ctx.clip();
+            ctx.drawImage(img, cx - ls / 2, cy - ls / 2, ls, ls);
+            ctx.restore();
+          };
+          img.src = logoSrc;
+        }
+      }
 
-  function downloadAll() {
-    if (!items.length) { toast('⚠', 'ไม่มี QR Code'); return; }
-    items.forEach(function(item, i) { setTimeout(function() { downloadQR(item.id); }, i * 350); });
-    toast('↓', 'กำลังดาวน์โหลด ' + items.length + ' รายการ...');
-  }
+      function updateLivePreview() {
+        checkContrast();
+        const { text, autoLabel } = getPayload();
+        const hasText = Boolean(text);
 
-  function confirmDelete(id) {
-    const item = items.find(function(i) { return i.id === id; });
-    document.getElementById('modal-title').textContent = 'ลบ QR Code';
-    document.getElementById('modal-body').textContent = 'ลบ "' + item.label + '" ออกจากรายการ?';
-    document.getElementById('modal-confirm').onclick = function() { deleteQR(id); closeModal(); };
-    document.getElementById('modal').classList.add('open');
-  }
+        els.btnDownloadLive.disabled = !hasText;
+        els.btnCopyLive.disabled = !hasText;
+        els.btnSaveItem.disabled = !hasText;
 
-  function deleteQR(id) {
-    items = items.filter(function(i) { return i.id !== id; });
-    const card = document.getElementById('card-' + id);
-    if (card) {
-      card.style.transition = 'all .2s ease';
-      card.style.opacity = '0';
-      card.style.transform = 'scale(0.96)';
-      setTimeout(function() { card.remove(); }, 220);
-    }
-    updateCount();
-    if (!items.length) document.getElementById('empty-state').classList.add('visible');
-    toast('✓', 'ลบแล้ว');
-  }
+        els.customizeReveal.classList.toggle('is-open', hasText);
+        els.customizeReveal.setAttribute('aria-hidden', String(!hasText));
+        els.customizeReveal.inert = !hasText;
 
-  function confirmClearAll() {
-    if (!items.length) { toast('⚠', 'ไม่มี QR Code'); return; }
-    document.getElementById('modal-title').textContent = 'ลบทั้งหมด';
-    document.getElementById('modal-body').textContent = 'ลบ QR Code ทั้งหมด ' + items.length + ' รายการ?';
-    document.getElementById('modal-confirm').onclick = function() { clearAll(); closeModal(); };
-    document.getElementById('modal').classList.add('open');
-  }
+        if (!hasText) {
+          els.liveCanvas.style.display = 'none';
+          els.livePlaceholder.style.display = 'flex';
+          return;
+        }
 
-  function clearAll() {
-    items = [];
-    document.querySelectorAll('.qr-card').forEach(function(c) { c.remove(); });
-    updateCount();
-    document.getElementById('empty-state').classList.add('visible');
-    toast('✓', 'ลบทั้งหมดแล้ว');
-  }
+        els.livePlaceholder.style.display = 'none';
+        els.liveCanvas.style.display = 'block';
 
-  function closeModal(e) {
-    if (e && e.target !== document.getElementById('modal')) return;
-    document.getElementById('modal').classList.remove('open');
-  }
+        drawQRToCanvas(
+          els.liveCanvas,
+          text,
+          { size: qrSize, dark: darkColor, light: lightColor, ec: ecLevel },
+          logoDataUrl
+        );
+      }
 
-  function shakeInput(id) {
-    const el = document.getElementById(id);
-    el.classList.remove('shake');
-    void el.offsetWidth;
-    el.classList.add('shake');
-    el.style.borderColor = '#f5c6c6';
-    setTimeout(function() { el.style.borderColor = ''; el.classList.remove('shake'); }, 900);
-  }
+      function scheduleRender() {
+        clearTimeout(renderTimer);
+        renderTimer = setTimeout(updateLivePreview, 70);
+      }
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
-    if (e.key === 'Enter' && e.target.id === 'input-url') addQR();
-  });
+      // Mode switching
+      function setMode(nextMode) {
+        mode = nextMode;
+        const idx = ['link', 'ig', 'wifi'].indexOf(nextMode);
+        els.segIndicator.style.transform = `translateX(${idx * 100}%)`;
+        els.tabs.forEach((btn) => {
+          btn.setAttribute('aria-selected', String(btn.dataset.mode === nextMode));
+        });
+        Object.entries(els.panels).forEach(([k, panel]) => {
+          panel.classList.toggle('active', k === nextMode);
+        });
+        updateLivePreview();
+      }
 
-  var toastTimer;
-  function toast(icon, msg) {
-    clearTimeout(toastTimer);
-    document.getElementById('toast-icon').textContent = icon;
-    document.getElementById('toast-msg').textContent = msg;
-    const el = document.getElementById('toast');
-    el.classList.add('show');
-    toastTimer = setTimeout(function() { el.classList.remove('show'); }, 2800);
-  }
+      els.tabs.forEach((btn) => {
+        btn.addEventListener('click', () => setMode(btn.dataset.mode));
+      });
 
-  function updateCount() {
-    const n = items.length;
-    document.getElementById('count').textContent = n;
-    document.getElementById('count2').textContent = n;
-  }
+      // Inputs
+      [els.inputUrl, els.inputIg, els.inputWifiSsid, els.inputWifiPass, els.inputLabel].forEach((input) => {
+        input.addEventListener('input', scheduleRender);
+      });
 
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+      // Paste button
+      els.btnPaste.addEventListener('click', async () => {
+        try {
+          const text = await navigator.clipboard.readText();
+          if (text) {
+            els.inputUrl.value = text.trim();
+            updateLivePreview();
+            showToast('วางลิงก์เรียบร้อย');
+          } else {
+            showToast('ยังไม่มีข้อความในคลิปบอร์ด');
+          }
+        } catch {
+          els.inputUrl.focus();
+          showToast('กด Ctrl+V หรือแตะค้างเพื่อวางได้เลย');
+        }
+      });
 
-  function slug(s) {
-    return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,30) || 'qr';
-  }
-</script>
+      // Custom iOS Liquid Glass Color Picker + Swatches
+      const swatches = Array.from(document.querySelectorAll('.swatch[data-dark]'));
+      let cpTarget = 'dark';
+      let cpH = 0, cpS = 0, cpV = 0.1;
+
+      function rgbToHsv(r, g, b) {
+        r /= 255; g /= 255; b /= 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+        let h = 0;
+        if (d !== 0) {
+          if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) * 60;
+          else if (max === g) h = ((b - r) / d + 2) * 60;
+          else h = ((r - g) / d + 4) * 60;
+        }
+        return [h, max === 0 ? 0 : d / max, max];
+      }
+
+      function hsvToHex(h, s, v) {
+        const c = v * s, x = c * (1 - Math.abs(((h / 60) % 2) - 1)), m = v - c;
+        let r = 0, g = 0, b = 0;
+        if (h < 60) [r, g, b] = [c, x, 0];
+        else if (h < 120) [r, g, b] = [x, c, 0];
+        else if (h < 180) [r, g, b] = [0, c, x];
+        else if (h < 240) [r, g, b] = [0, x, c];
+        else if (h < 300) [r, g, b] = [x, 0, c];
+        else [r, g, b] = [c, 0, x];
+        const toHex = (n) => Math.round((n + m) * 255).toString(16).padStart(2, '0');
+        return '#' + toHex(r) + toHex(g) + toHex(b);
+      }
+
+      function syncPickerUI() {
+        const hex = cpTarget === 'dark' ? darkColor : lightColor;
+        els.cpSv.style.backgroundColor = `hsl(${Math.round(cpH)}, 100%, 50%)`;
+        els.cpSvThumb.style.left = `${cpS * 100}%`;
+        els.cpSvThumb.style.top = `${(1 - cpV) * 100}%`;
+        els.cpSvThumb.style.backgroundColor = hex;
+        els.cpHueThumb.style.left = `${(cpH / 360) * 100}%`;
+        els.cpHueThumb.style.backgroundColor = `hsl(${Math.round(cpH)}, 100%, 50%)`;
+        els.cpPreview.style.backgroundColor = hex;
+        els.cpHex.value = hex.toUpperCase();
+        els.cpDotDark.style.backgroundColor = darkColor;
+        els.cpDotLight.style.backgroundColor = lightColor;
+      }
+
+      function loadTargetIntoPicker(target) {
+        cpTarget = target;
+        els.cpTabDark.setAttribute('aria-selected', String(target === 'dark'));
+        els.cpTabLight.setAttribute('aria-selected', String(target === 'light'));
+        const hex = target === 'dark' ? darkColor : lightColor;
+        const [r, g, b] = hexToRgb(hex);
+        [cpH, cpS, cpV] = rgbToHsv(r, g, b);
+        syncPickerUI();
+      }
+
+      function applyColors(dark, light, labelText, syncHsv = true) {
+        darkColor = dark;
+        lightColor = light;
+        els.colorName.textContent = labelText;
+        let matchedPreset = false;
+        swatches.forEach((s) => {
+          const match = s.dataset.dark.toLowerCase() === dark.toLowerCase() && s.dataset.light.toLowerCase() === light.toLowerCase();
+          if (match) matchedPreset = true;
+          s.setAttribute('aria-pressed', String(match));
+        });
+        els.btnCustomColor.setAttribute('aria-pressed', String(!matchedPreset));
+        if (syncHsv) {
+          const activeHex = cpTarget === 'dark' ? darkColor : lightColor;
+          const [r, g, b] = hexToRgb(activeHex);
+          [cpH, cpS, cpV] = rgbToHsv(r, g, b);
+        }
+        syncPickerUI();
+        scheduleRender();
+      }
+
+      function toggleColorPicker(forceOpen) {
+        const open = typeof forceOpen === 'boolean' ? forceOpen : !els.cpDrawer.classList.contains('open');
+        els.cpDrawer.classList.toggle('open', open);
+        els.cpDrawer.setAttribute('aria-hidden', String(!open));
+        els.btnCustomColor.setAttribute('aria-expanded', String(open));
+        if (open) loadTargetIntoPicker(cpTarget);
+      }
+
+      swatches.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          applyColors(btn.dataset.dark, btn.dataset.light, btn.dataset.name, true);
+        });
+      });
+
+      els.btnCustomColor.addEventListener('click', () => toggleColorPicker());
+      els.cpDone.addEventListener('click', () => toggleColorPicker(false));
+      els.cpTabDark.addEventListener('click', () => loadTargetIntoPicker('dark'));
+      els.cpTabLight.addEventListener('click', () => loadTargetIntoPicker('light'));
+
+      function handleSvPointer(e) {
+        const rect = els.cpSv.getBoundingClientRect();
+        cpS = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+        cpV = Math.min(1, Math.max(0, 1 - (e.clientY - rect.top) / rect.height));
+        const hex = hsvToHex(cpH, cpS, cpV);
+        if (cpTarget === 'dark') applyColors(hex, lightColor, 'สีที่เลือกเอง', false);
+        else applyColors(darkColor, hex, 'สีที่เลือกเอง', false);
+      }
+
+      function handleHuePointer(e) {
+        const rect = els.cpHue.getBoundingClientRect();
+        cpH = Math.min(359.9, Math.max(0, ((e.clientX - rect.left) / rect.width) * 360));
+        const hex = hsvToHex(cpH, cpS, cpV);
+        if (cpTarget === 'dark') applyColors(hex, lightColor, 'สีที่เลือกเอง', false);
+        else applyColors(darkColor, hex, 'สีที่เลือกเอง', false);
+      }
+
+      function bindDrag(el, handler) {
+        let dragging = false;
+        el.addEventListener('pointerdown', (e) => {
+          dragging = true;
+          el.setPointerCapture(e.pointerId);
+          handler(e);
+        });
+        el.addEventListener('pointermove', (e) => {
+          if (dragging) handler(e);
+        });
+        el.addEventListener('pointerup', () => { dragging = false; });
+        el.addEventListener('pointercancel', () => { dragging = false; });
+      }
+
+      bindDrag(els.cpSv, handleSvPointer);
+      bindDrag(els.cpHue, handleHuePointer);
+
+      els.cpHex.addEventListener('input', (e) => {
+        const v = e.target.value.trim();
+        if (/^#[0-9a-fA-F]{6}$/.test(v)) {
+          if (cpTarget === 'dark') applyColors(v.toLowerCase(), lightColor, 'สีที่เลือกเอง', true);
+          else applyColors(darkColor, v.toLowerCase(), 'สีที่เลือกเอง', true);
+        }
+      });
+
+      loadTargetIntoPicker('dark');
+
+      // Size pills
+      const sizeBtns = Array.from(document.querySelectorAll('.pill-choice[data-size]'));
+      sizeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          qrSize = parseInt(btn.dataset.size, 10) || 512;
+          sizeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          scheduleRender();
+        });
+      });
+
+      // Error correction pills
+      const ecBtns = Array.from(document.querySelectorAll('.pill-choice[data-ec]'));
+      function setEcLevel(level) {
+        ecLevel = level;
+        ecBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.ec === level)));
+        scheduleRender();
+      }
+      ecBtns.forEach((btn) => {
+        btn.addEventListener('click', () => setEcLevel(btn.dataset.ec));
+      });
+
+      // Logo upload
+      els.inputLogo.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          logoDataUrl = ev.target.result;
+          els.logoPreview.src = logoDataUrl;
+          els.logoThumbWrap.classList.add('visible');
+          setEcLevel('H');
+          updateLivePreview();
+          showToast('เพิ่มโลโก้แล้ว (ปรับให้สแกนติดง่ายอัตโนมัติ)');
+        };
+        reader.readAsDataURL(file);
+      });
+
+      els.btnClearLogo.addEventListener('click', () => {
+        logoDataUrl = null;
+        els.inputLogo.value = '';
+        els.logoPreview.src = '';
+        els.logoThumbWrap.classList.remove('visible');
+        updateLivePreview();
+        showToast('เอาโลโก้ออกแล้ว');
+      });
+
+      // Download & Copy helpers
+      function slugify(s) {
+        return String(s).toLowerCase().replace(/[^a-z0-9ก-๙]+/g, '-').replace(/^-|-$/g, '').slice(0, 32) || 'qr';
+      }
+
+      function downloadCanvas(canvas, label) {
+        const a = document.createElement('a');
+        a.download = 'qr-' + slugify(label) + '.png';
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+        showToast('ดาวน์โหลดรูป PNG แล้ว');
+      }
+
+      async function copyCanvas(canvas) {
+        if (!navigator.clipboard || typeof ClipboardItem === 'undefined') {
+          showToast('เบราว์เซอร์นี้ไม่รองรับการคัดลอกรูป ให้กดดาวน์โหลดแทนนะ');
+          return;
+        }
+        try {
+          const blob = await new Promise((res) => canvas.toBlob(res, 'image/png'));
+          await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+          showToast('คัดลอกรูปแล้ว! กดวางในพอร์ตหรือในงานได้เลย');
+        } catch {
+          showToast('คัดลอกไม่สำเร็จ ลองกดดาวน์โหลด PNG แทนนะ');
+        }
+      }
+
+      els.btnDownloadLive.addEventListener('click', () => {
+        const { text, autoLabel } = getPayload();
+        if (!text) return;
+        downloadCanvas(els.liveCanvas, els.inputLabel.value.trim() || autoLabel);
+      });
+
+      els.btnCopyLive.addEventListener('click', () => {
+        const { text } = getPayload();
+        if (!text) return;
+        copyCanvas(els.liveCanvas);
+      });
+
+      // Saved collection
+      function persistItems() {
+        try {
+          const compact = items.map((it) => ({
+            id: it.id,
+            label: it.label,
+            text: it.text,
+            opts: it.opts,
+          }));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(compact));
+        } catch {
+          // Ignore storage quota errors
+        }
+      }
+
+      function updateCounts() {
+        const n = items.length;
+        els.listCount.textContent = n;
+        els.emptyState.style.display = n ? 'none' : 'block';
+      }
+
+      function esc(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function renderSavedCard(item) {
+        const card = document.createElement('article');
+        card.className = 'qr-card glass';
+        card.id = 'card-' + item.id;
+        card.innerHTML = `
+          <div class="qr-card-head">
+            <h3 class="qr-card-title" title="${esc(item.label)}">${esc(item.label)}</h3>
+            <span class="field-hint">${item.opts.size}px</span>
+          </div>
+          <div class="qr-card-body">
+            <canvas id="card-canvas-${item.id}" width="${item.opts.size}" height="${item.opts.size}" aria-label="QR Code สำหรับ ${esc(item.label)}"></canvas>
+          </div>
+          <div class="qr-card-foot">
+            <p class="qr-card-sub" title="${esc(item.text)}">${esc(item.text)}</p>
+            <div class="qr-card-btns">
+              <button type="button" class="btn btn-glass btn-sm" data-act="dl" data-id="${item.id}">ดาวน์โหลด</button>
+              <button type="button" class="btn btn-glass btn-icon" data-act="cp" data-id="${item.id}" aria-label="คัดลอกรูป ${esc(item.label)}" title="คัดลอกรูป">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+              <button type="button" class="btn btn-danger btn-icon" data-act="del" data-id="${item.id}" aria-label="ลบ ${esc(item.label)}" title="ลบ">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          </div>
+        `;
+        els.cardsGrid.insertBefore(card, els.cardsGrid.firstChild);
+        const canvas = card.querySelector('canvas');
+        drawQRToCanvas(canvas, item.text, item.opts, item.logoDataUrl || null);
+      }
+
+      els.btnSaveItem.addEventListener('click', () => {
+        const { text, autoLabel } = getPayload();
+        if (!text) return;
+        const label = els.inputLabel.value.trim() || autoLabel;
+        const item = {
+          id: ++idCounter,
+          label,
+          text,
+          opts: { size: qrSize, dark: darkColor, light: lightColor, ec: ecLevel },
+          logoDataUrl: logoDataUrl || null,
+        };
+        items.push(item);
+        renderSavedCard(item);
+        updateCounts();
+        persistItems();
+        showToast('เก็บ "' + label + '" ลงรายการแล้ว');
+      });
+
+      els.cardsGrid.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-act]');
+        if (!btn) return;
+        const id = Number(btn.dataset.id);
+        const item = items.find((i) => i.id === id);
+        if (!item) return;
+        const canvas = $('card-canvas-' + id);
+
+        if (btn.dataset.act === 'dl' && canvas) {
+          downloadCanvas(canvas, item.label);
+        } else if (btn.dataset.act === 'cp' && canvas) {
+          copyCanvas(canvas);
+        } else if (btn.dataset.act === 'del') {
+          openDialog('ลบ QR Code', `ต้องการลบ "${item.label}" ออกจากรายการไหม?`, () => {
+            items = items.filter((i) => i.id !== id);
+            const card = $('card-' + id);
+            if (card) card.remove();
+            updateCounts();
+            persistItems();
+            showToast('ลบรายการแล้ว');
+          });
+        }
+      });
+
+      els.btnDownloadAll.addEventListener('click', () => {
+        if (!items.length) { showToast('ยังไม่มีรายการให้ดาวน์โหลด'); return; }
+        items.forEach((item, idx) => {
+          setTimeout(() => {
+            const c = $('card-canvas-' + item.id);
+            if (c) downloadCanvas(c, item.label);
+          }, idx * 320);
+        });
+        showToast(`กำลังดาวน์โหลด ${items.length} รายการ...`);
+      });
+
+      els.btnClearAll.addEventListener('click', () => {
+        if (!items.length) { showToast('ยังไม่มีรายการให้ลบ'); return; }
+        openDialog('ลบทั้งหมด', `ต้องการลบ QR Code ทั้งหมด ${items.length} รายการเลยไหม?`, () => {
+          items = [];
+          document.querySelectorAll('.qr-card').forEach((c) => c.remove());
+          updateCounts();
+          persistItems();
+          showToast('ลบทั้งหมดเรียบร้อย');
+        });
+      });
+
+      // Native dialog
+      function openDialog(title, desc, onConfirm) {
+        els.dialogTitle.textContent = title;
+        els.dialogDesc.textContent = desc;
+        dialogCallback = onConfirm;
+        if (typeof els.dialog.showModal === 'function') {
+          els.dialog.showModal();
+        } else if (confirm(desc)) {
+          onConfirm();
+        }
+      }
+
+      els.dialogCancel.addEventListener('click', () => els.dialog.close());
+      els.dialogConfirm.addEventListener('click', () => {
+        els.dialog.close();
+        if (dialogCallback) dialogCallback();
+      });
+      els.dialog.addEventListener('click', (e) => {
+        if (e.target === els.dialog) els.dialog.close();
+      });
+
+      // Policy dialog
+      els.btnOpenPolicy.addEventListener('click', () => {
+        if (typeof els.policyDialog.showModal === 'function') {
+          els.policyDialog.showModal();
+        }
+      });
+      els.btnClosePolicy.addEventListener('click', () => els.policyDialog.close());
+      els.btnClosePolicyX.addEventListener('click', () => els.policyDialog.close());
+      els.policyDialog.addEventListener('click', (e) => {
+        if (e.target === els.policyDialog) els.policyDialog.close();
+      });
+
+      // Hydrate saved items on DOMContentLoaded (after defer qrcode.min.js loads)
+      window.addEventListener('DOMContentLoaded', () => {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) {
+              parsed.forEach((it) => {
+                if (it && it.text && it.opts) {
+                  const hydrated = {
+                    id: ++idCounter,
+                    label: it.label || it.text,
+                    text: it.text,
+                    opts: it.opts,
+                    logoDataUrl: null,
+                  };
+                  items.push(hydrated);
+                  renderSavedCard(hydrated);
+                }
+              });
+            }
+          }
+        } catch {
+          // Ignore corrupted storage
+        }
+        updateCounts();
+        updateLivePreview();
+      });
+    })();
+  </script>
 </body>
 </html>

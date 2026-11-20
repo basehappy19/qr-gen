@@ -1,0 +1,30 @@
+{
+  "name": "PortQR — สร้าง QR Code ใส่พอร์ต ฟรี ใช้ง่าย",
+  "short_name": "PortQR",
+  "description": "เว็บสร้าง QR Code ฟรีสำหรับนักเรียน ทำ QR Code ผลงานเพิ่มเติมใส่พอร์ตหรือในงานได้ทันที",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8f8fa",
+  "theme_color": "#e11d48",
+  "lang": "th",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
